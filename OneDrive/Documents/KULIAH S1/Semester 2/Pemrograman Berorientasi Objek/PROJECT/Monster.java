@@ -7,6 +7,17 @@ public abstract class Monster implements BattleActions {
     int healthPoint;
     int expPoint;
     List<Element> element;
+    // Atribut lainnya
+
+    // Metode lainnya
+
+    public int getExpPoint() {
+        return expPoint;
+    }
+
+    public void setExpPoint(int expPoint) {
+        this.expPoint = expPoint;
+    }
 
     // Constructor
     public Monster(String nama, int level, List<Element> elements) {
@@ -40,9 +51,10 @@ public abstract class Monster implements BattleActions {
         this.element = element2;
     }
 
-    public int getHealthPoint(){
+    public int getHealthPoint() {
         return healthPoint;
     }
+
     // Setter for healthPoint
     public void setHealthPoint(int healthPoint) {
         this.healthPoint = healthPoint;
@@ -67,5 +79,4 @@ public abstract class Monster implements BattleActions {
 
     protected abstract void performRandomAttack(Monster myMonster);
 
-   
 }

@@ -1,8 +1,9 @@
-
-import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class BattleArena {
+    private boolean healthItemUsed = false;
+
     public void startBattle(Monster myMonster, Monster wildMonster) {
         System.out.println("Welcome to the Battle Arena!");
         System.out.println("Battle started between " + myMonster.getNama() + " and " + wildMonster.getNama());
@@ -33,7 +34,7 @@ public class BattleArena {
                         myMonster.elementalAttack(wildMonster);
                         break;
                     case 4:
-                    useItem(scanner, myMonster);
+                        useItem(scanner, myMonster);
                         break;
                     case 5:
                         if (myMonster.flee()) {
@@ -66,17 +67,24 @@ public class BattleArena {
         }
 
         scanner.close(); // Close scanner to prevent resource leak
+        healthItemUsed = false; // Reset the flag for the next battle
     }
-     private void useItem(Scanner scanner, Monster myMonster) {
-        System.out.println("Available Items: 1. Health Potion, 2. Elemental Potion");
+
+    private void useItem(Scanner scanner, Monster myMonster) {
+        System.out.println("Available Items: 1. Health Potion (+20 HP), 2. Elemental Potion (Change Element)");
         System.out.println("Select an item to use:");
         int itemChoice = scanner.nextInt();
         scanner.nextLine();
 
         switch (itemChoice) {
             case 1: // Health Potion
-                myMonster.setHealthPoint(myMonster.getHealthPoint() + 20); // Assuming +20 HP for health potion
-                System.out.println(myMonster.getNama() + " used Health Potion. Gained 20 HP.");
+                if (!healthItemUsed) {
+                    myMonster.setHealthPoint(myMonster.getHealthPoint() + 20); // Assuming +20 HP for health potion
+                    healthItemUsed = true;
+                    System.out.println(myMonster.getNama() + " used Health Potion. Gained 20 HP.");
+                } else {
+                    System.out.println("Health Potion can only be used once per battle.");
+                }
                 break;
             case 2: // Elemental Potion
                 System.out.println("Select an element: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
@@ -112,8 +120,7 @@ public class BattleArena {
                 System.out.println("Invalid element selection.");
                 return;
         }
-        myMonster.setElement(Arrays.asList(newElement));
+        myMonster.setElement(List.of(newElement));
         System.out.println(myMonster.getNama() + " has changed to " + newElement.getNama() + " element.");
     }
-
 }

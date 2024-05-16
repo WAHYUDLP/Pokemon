@@ -34,7 +34,7 @@ public class MainPokemon {
                     dungeon.explore(playerMonster); // Memanggil explore di Dungeon
                     break;
                 case 2:
-                    homeBase.enterHomeBase(playerMonster); // Masuk ke Home Base
+                    homeBase.enterHomeBase(playerMonster);
                     break;
                 case 3:
                     System.out.println("Exiting Pokemon World. Goodbye!");

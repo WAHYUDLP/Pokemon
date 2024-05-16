@@ -20,12 +20,12 @@ public class HomeBase {
     public void levelUpMonster(PlayerMonster monster) {
         if (monster.getWins() > 0) {
             monster.setLevel(monster.getLevel() + 1);
-            monster.incrementWins(); // Decrease win count by 1
+           // monster.decrementWins(); // Decrease win count by 1
             monster.setHasEvolved(false); // Reset evolve status
             System.out.println(monster.getNama() + " has leveled up to " + monster.getLevel());
         } else {
             System.out.println("Your level now " + monster.getLevel());
-            System.out.println(monster.getNama() + " has not won any battles yet.");
+            System.out.println(monster.getNama() + " Kamu harus memenangkan game untuk dapat naik 1 level");
         }
     }
 
@@ -37,7 +37,8 @@ public class HomeBase {
         } else if (monster.hasEvolved()) {
             System.out.println(monster.getNama() + " has already evolved this level.");
         } else {
-            System.out.println("Evolution to " + newElement.getNama() + " is not allowed from " + monster.getElement().get(0).getNama());
+            System.out.println("Evolution to " + newElement.getNama() + " is not allowed from "
+                    + monster.getElement().get(0).getNama());
         }
     }
 
@@ -46,8 +47,17 @@ public class HomeBase {
         System.out.println(monster.getNama() + " has been fully healed.");
     }
 
-    public void buyItem(Item item) {
-        System.out.println("Bought " + item.getNama());
+    public void buyItem(Monster monster, Item item) {
+        if (monster.getExpPoint() >= 20) {
+            monster.setExpPoint(monster.getExpPoint() - 20);
+            System.out.println("Bought " + item.getNama());
+        } else {
+            System.out.println("Not enough EP to buy " + item.getNama());
+        }
+    }
+
+    public void checkEP(PlayerMonster monster) {
+        System.out.println(monster.getNama() + " has " + monster.getExpPoint() + " EP.");
     }
 
     public void enterHomeBase(PlayerMonster playerMonster) {
@@ -63,7 +73,8 @@ public class HomeBase {
             System.out.println("4. Evolve Monster");
             System.out.println("5. Heal Monster");
             System.out.println("6. Buy Item");
-            System.out.println("7. Exit Home Base");
+            System.out.println("7. Check EP");
+            System.out.println("8. Exit Home Base");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
@@ -100,22 +111,66 @@ public class HomeBase {
                     healMonster(playerMonster);
                     break;
                 case 6:
-                    System.out.println("Enter item name:");
-                    String itemName = scanner.nextLine();
-                    System.out.println("Enter item HP:");
-                    int itemHP = scanner.nextInt();
-                    System.out.println("Enter item energy point:");
-                    int itemEnergyPoint = scanner.nextInt();
-                    Item item = new Item(itemName, itemHP, itemEnergyPoint);
-                    buyItem(item);
+                    buyItemOption(scanner, playerMonster);
                     break;
                 case 7:
+                    checkEP(playerMonster);
+                    break;
+                case 8:
                     done = true;
                     break;
                 default:
                     System.out.println("Invalid choice. Please choose again.");
                     break;
             }
+        }
+    }
+
+    private void buyItemOption(Scanner scanner, PlayerMonster playerMonster) {
+        System.out.println("Available Items: ");
+        System.out.println("1. Health Potion (+20 HP)");
+        System.out.println("2. Elemental Potion (Change Element)");
+
+        System.out.print("Choose an item to buy: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        switch (choice) {
+            case 1:
+                buyItem(playerMonster, new Item("Health Potion", 20, 0));
+                break;
+            case 2:
+                System.out.println("Choose an element to apply: FIRE, WATER, EARTH, AIR, ICE");
+                String input = scanner.nextLine().toUpperCase(); // Ambil input dan ubah ke huruf besar
+                Element newElement = null;
+
+                switch (input) {
+                    case "FIRE":
+                        newElement = Element.API;
+                        break;
+                    case "WATER":
+                        newElement = Element.AIR;
+                        break;
+                    case "EARTH":
+                        newElement = Element.TANAH;
+                        break;
+                    case "AIR":
+                        newElement = Element.ANGIN;
+                        break;
+                    case "ICE":
+                        newElement = Element.ES;
+                        break;
+                    default:
+                        System.out.println("Invalid element choice. Potion has no effect.");
+                        return;
+                }
+
+                Item elementalPotion = new Item("Elemental Potion", 0, 0);
+                buyItem(playerMonster, elementalPotion);
+                break;
+            default:
+                System.out.println("Invalid item choice. No item bought.");
+                break;
         }
     }
 }
