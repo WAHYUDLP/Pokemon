@@ -7,11 +7,11 @@ public class Element {
     private List<Element> evolutionOptions;
 
     // Definisi elemen-elemen
-    public static final Element API = new Element("Api");
-    public static final Element ANGIN = new Element("Angin");
-    public static final Element AIR = new Element("Air");
-    public static final Element ES = new Element("Es");
-    public static final Element TANAH = new Element("Tanah");
+    public static final Element API = new Element("API");
+    public static final Element ANGIN = new Element("ANGIN");
+    public static final Element AIR = new Element("AIR");
+    public static final Element ES = new Element("ES");
+    public static final Element TANAH = new Element("TANAH");
 
     static {
         // Mengatur kelemahan setiap elemen

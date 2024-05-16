@@ -14,7 +14,10 @@ public abstract class Monster implements BattleActions {
     public int getExpPoint() {
         return expPoint;
     }
-
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+    
     public void setExpPoint(int expPoint) {
         this.expPoint = expPoint;
     }
@@ -78,5 +81,7 @@ public abstract class Monster implements BattleActions {
     public abstract void evolve(Element newElement);
 
     protected abstract void performRandomAttack(Monster myMonster);
+
+    protected abstract void incrementWins();
 
 }

@@ -14,12 +14,19 @@ public class PlayerMonster extends Monster {
         this.wins = 0;
         this.hasEvolved = false;
     }
-
+    public void resetWins() {
+        this.wins = 0;
+    }
     // Getter for name
     public String getNama() {
         return super.getNama();
     }
 
+    public void setNama(String nama) {
+        super.setNama(nama);
+    }
+    
+    
     public void setOwner(Player owner) {
         this.owner = owner;
     }
@@ -29,6 +36,7 @@ public class PlayerMonster extends Monster {
     }
 
     public int getWins() {
+        
         return wins;
     }
 
@@ -46,7 +54,7 @@ public class PlayerMonster extends Monster {
 
     @Override
     public void basicAttack(Monster target) {
-        int damage = 12; // Contoh: serangan dasar mengurangi 10 HP per level
+        int damage = level* 12; // Contoh: serangan dasar mengurangi 10 HP per level
 
         // Reduksi HP target
         target.healthPoint -= damage;
@@ -60,7 +68,7 @@ public class PlayerMonster extends Monster {
 
     @Override
     public void specialAttack(Monster target) {
-        int actualDamage = 15; // Random damage between 50% to 100% of base
+        int actualDamage = level*15; // Random damage between 50% to 100% of base
 
         boolean miss = Math.random() < 0.1; // 10% chance of missing
 
@@ -83,7 +91,7 @@ public class PlayerMonster extends Monster {
     public void elementalAttack(Monster target) {
         if (element != null && target.element != null) {
             int effectiveness = determineElementalEffectiveness(target.element);
-            int baseDamage = 20; // Adjust this calculation as needed
+            int baseDamage = level*20; // Adjust this calculation as needed
             int actualDamage = baseDamage * effectiveness;
 
             target.healthPoint -= actualDamage;
@@ -104,16 +112,16 @@ public class PlayerMonster extends Monster {
     private int determineElementalEffectiveness(List<Element> elements) {
         for (Element element : elements) {
             switch (element.getNama().toLowerCase()) {
-                case "air":
-                    return element.getNama().equalsIgnoreCase("tanah") ? 2 : 1;
-                case "tanah":
-                    return element.getNama().equalsIgnoreCase("air") ? 2 : 1;
-                case "api":
-                    return element.getNama().equalsIgnoreCase("es") ? 2 : 1;
-                case "es":
-                    return element.getNama().equalsIgnoreCase("angin") ? 2 : 1;
-                case "angin":
-                    return element.getNama().equalsIgnoreCase("api") ? 2 : 1;
+                case "WATER":
+                    return element.getNama().equalsIgnoreCase("EARTH") ? 2 : 1;
+                case "EARTH":
+                    return element.getNama().equalsIgnoreCase("WATER") ? 2 : 1;
+                case "FIRE":
+                    return element.getNama().equalsIgnoreCase("ICE") ? 2 : 1;
+                case "ICE":
+                    return element.getNama().equalsIgnoreCase("AIR") ? 2 : 1;
+                case "AIR":
+                    return element.getNama().equalsIgnoreCase("FIRE") ? 2 : 1;
                 default:
                     return 1; // Default effectiveness if elements don't match
             }
@@ -163,7 +171,7 @@ public class PlayerMonster extends Monster {
 
         if (success) {
             System.out.println("Successfully fled from the battle.");
-            System.out.println("Kamu kalah");
+            System.out.println("You Lose!");
         } else {
             System.out.println("Failed to flee. The battle continues.");
         }
@@ -198,5 +206,10 @@ public class PlayerMonster extends Monster {
     protected void performRandomAttack(Monster myMonster) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'performRandomAttack'");
+    }
+
+
+    public void setWins(int wins) {
+        this.wins = wins;
     }
 }

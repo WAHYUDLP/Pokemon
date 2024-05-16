@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,25 +10,17 @@ public class HomeBase {
         storedMonsters = new ArrayList<>();
     }
 
-    public void storeMonster(Monster monster) {
-        storedMonsters.add(monster);
-    }
-
-    public void retrieveMonster(Monster monster) {
-        storedMonsters.remove(monster);
-    }
-
     public void levelUpMonster(PlayerMonster monster) {
-        if (monster.getWins() > 0) {
+        if (monster.getWins() >= 5) { // Level up after winning 5 battles
             monster.setLevel(monster.getLevel() + 1);
-           // monster.decrementWins(); // Decrease win count by 1
+            monster.setWins(monster.getWins() - 5); // Reset wins after leveling up
             monster.setHasEvolved(false); // Reset evolve status
             System.out.println(monster.getNama() + " has leveled up to " + monster.getLevel());
         } else {
-            System.out.println("Your level now " + monster.getLevel());
-            System.out.println(monster.getNama() + " Kamu harus memenangkan game untuk dapat naik 1 level");
+            System.out.println(monster.getNama() + " needs to win at least 5 battles to level up.");
         }
     }
+
 
     public void evolveMonster(PlayerMonster monster, Element newElement) {
         if (!monster.hasEvolved() && monster.getElement().get(0).getEvolutionOptions().contains(newElement)) {
@@ -60,6 +53,14 @@ public class HomeBase {
         System.out.println(monster.getNama() + " has " + monster.getExpPoint() + " EP.");
     }
 
+    public void checkLevel(PlayerMonster monster) {
+        System.out.println(monster.getNama() + " is currently at level " + monster.getLevel() + ".");
+    }
+
+    public void checkHP(PlayerMonster monster) {
+        System.out.println(monster.getNama() + " currently has " + monster.getHealthPoint() + " HP.");
+    }
+
     public void enterHomeBase(PlayerMonster playerMonster) {
         System.out.println("Welcome back to Home Base!");
         Scanner scanner = new Scanner(System.in);
@@ -67,29 +68,26 @@ public class HomeBase {
         boolean done = false;
         while (!done) {
             System.out.println("\nWhat would you like to do?");
-            System.out.println("1. Store Monster");
-            System.out.println("2. Retrieve Monster");
-            System.out.println("3. Level Up Monster");
-            System.out.println("4. Evolve Monster");
-            System.out.println("5. Heal Monster");
-            System.out.println("6. Buy Item");
-            System.out.println("7. Check EP");
-            System.out.println("8. Exit Home Base");
+            System.out.println("1. Level Up Monster");
+            System.out.println("2. Evolve Monster");
+            System.out.println("3. Heal Monster");
+            System.out.println("4. Buy Item");
+            System.out.println("5. Check EP");
+            System.out.println("6. Check Level"); // Option to check level
+            System.out.println("7. Check HP"); // Option to check HP
+            System.out.println("8. Save Game Progress");
+            System.out.println("9. Load Game Progress");
+            System.out.println("10. Exit Home Base");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 
             switch (choice) {
+            
                 case 1:
-                    storeMonster(playerMonster);
-                    break;
-                case 2:
-                    retrieveMonster(playerMonster);
-                    break;
-                case 3:
                     levelUpMonster(playerMonster);
                     break;
-                case 4:
+                case 2:
                     System.out.println("Select an element to evolve to: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
                     int elementChoice = scanner.nextInt();
                     scanner.nextLine();
@@ -107,16 +105,28 @@ public class HomeBase {
                         System.out.println("Invalid element choice.");
                     }
                     break;
-                case 5:
+                case 3:
                     healMonster(playerMonster);
                     break;
-                case 6:
+                case 4:
                     buyItemOption(scanner, playerMonster);
                     break;
-                case 7:
+                case 5:
                     checkEP(playerMonster);
                     break;
+                case 6:
+                    checkLevel(playerMonster); // Call the method to check level
+                    break;
+                case 7:
+                    checkHP(playerMonster); // Call the method to check HP
+                    break;
                 case 8:
+                    GameProgress.saveProgress(playerMonster); // Save game progress
+                    break;
+                case 9:
+                    GameProgress.loadProgress(playerMonster); // Load game progress
+                    break;
+                case 10:
                     done = true;
                     break;
                 default:

@@ -57,16 +57,17 @@ public class BattleArena {
 
             // Check if battle ended
             if (myMonster.isFainted() || wildMonster.isFainted()) {
-                System.out.println(myMonster.isFainted() ? "Your monster has fainted!"
-                        : "You defeated the wild monster! Gaining experience...");
-                if (!myMonster.isFainted()) {
+                if (myMonster.isFainted()) {
+                    System.out.println("Your monster has fainted!");
+                } else {
+                    System.out.println("You defeated the wild monster! Gaining experience...");
                     myMonster.gainExperiencePoints(50);
+                    myMonster.incrementWins(); // Increment wins after winning a battle
                 }
                 battleEnded = true;
             }
         }
 
-        scanner.close(); // Close scanner to prevent resource leak
         healthItemUsed = false; // Reset the flag for the next battle
     }
 
@@ -123,4 +124,5 @@ public class BattleArena {
         myMonster.setElement(List.of(newElement));
         System.out.println(myMonster.getNama() + " has changed to " + newElement.getNama() + " element.");
     }
+
 }

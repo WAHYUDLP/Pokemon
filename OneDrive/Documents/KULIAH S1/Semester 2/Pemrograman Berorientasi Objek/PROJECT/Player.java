@@ -7,7 +7,7 @@ public class Player {
     HomeBase homeBase;
     Dungeon currentDungeon;
     BattleArena battleArena;
-
+ 
 
 
     public Player(String nama) {
@@ -18,7 +18,7 @@ public class Player {
         this.currentDungeon = new Dungeon(battleArena);
     }
 
-    // Getter for name
+    // Getter for name 
     public String getNama() {
         return nama;
     }
