@@ -65,5 +65,7 @@ public abstract class Monster implements BattleActions {
 
     public abstract void evolve(Element newElement);
 
+    protected abstract void performRandomAttack(Monster myMonster);
+
    
 }

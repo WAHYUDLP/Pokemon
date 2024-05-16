@@ -9,10 +9,12 @@ public class Player {
     BattleArena battleArena;
 
 
+
     public Player(String nama) {
         this.nama = nama;
         this.monsters = new ArrayList<>();
         this.homeBase = new HomeBase();
+        this.battleArena = new BattleArena();
         this.currentDungeon = new Dungeon(battleArena);
     }
 
@@ -20,13 +22,22 @@ public class Player {
     public String getNama() {
         return nama;
     }
-
-    public void enterDungeon(Dungeon dungeon) {
-        this.currentDungeon = dungeon;
+    public void enterDungeon() {
         System.out.println(nama + " has entered a dungeon.");
-        currentDungeon.startBattle(this); // Memulai pertarungan setelah masuk dungeon
+        if (monsters.isEmpty()) {
+            System.out.println("No monsters to enter the dungeon.");
+            return;
+        }
+        currentDungeon.startBattle(this);
     }
-
+    // public void enterDungeon(Dungeon dungeon) {
+    //     this.currentDungeon = dungeon;
+    //     System.out.println(nama + " has entered a dungeon.");
+    //     currentDungeon.startBattle(this); // Memulai pertarungan setelah masuk dungeon
+    // }
+ public HomeBase getHomeBase() {
+        return homeBase;
+    }
     public void battleMonster(Monster monster) {
         if (!monsters.isEmpty()) {
             Monster myMonster = monsters.get(0); // Contoh sederhana, memilih monster pertama

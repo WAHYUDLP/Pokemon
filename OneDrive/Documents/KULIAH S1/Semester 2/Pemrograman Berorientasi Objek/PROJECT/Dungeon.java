@@ -19,16 +19,24 @@ public class Dungeon {
 
 
     private void generateMonster() {
-        monsters.add(new WildMonster("Drake", 5, List.of(new Element("FIRE")), true));
-        monsters.add(new WildMonster("Aqua Spirit", 4, List.of(new Element("WATER")), true));
+        monsters.add(new WildMonster("Aqua Spirit", 4, List.of(new Element("AIR")), true));
+
+        monsters.add(new WildMonster("Drake", 5, List.of(new Element("API")), false));
     }
 
-    public void explore(PlayerMonster playerMonster) {
-        int randomChance = random.nextInt(100); // Generate a random number between 0 and 99
-        if (randomChance < 50 && !monsters.isEmpty()) { // Adjust the chance as needed
-            battleArena.startBattle(playerMonster, getMonster()); // Memanggil startBattle di BattleArena
+ public void explore(PlayerMonster playerMonster) {
+        if (monsters.isEmpty()) {
+            System.out.println("No monsters left to encounter in the dungeon.");
+            return;
+        }
+
+        int encounterChance = random.nextInt(100);  // Random chance generation
+        if (encounterChance < 50) {  // 50% chance to encounter a monster
+            Monster wildMonster = getMonster();
+            System.out.println("A wild " + wildMonster.getNama() + " appears!");
+            battleArena.startBattle(playerMonster, wildMonster);
         } else {
-            System.out.println("No monsters found in this area.");
+            System.out.println("No monsters encountered this time.");
         }
     }
     

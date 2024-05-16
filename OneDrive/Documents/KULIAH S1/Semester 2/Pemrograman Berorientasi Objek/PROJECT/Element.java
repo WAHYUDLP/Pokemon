@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+
 public class Element {
     private String nama;
     private List<Element> weakness;
