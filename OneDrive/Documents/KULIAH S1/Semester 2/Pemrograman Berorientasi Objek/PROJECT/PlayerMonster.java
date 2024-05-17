@@ -9,24 +9,21 @@ public class PlayerMonster extends Monster {
     private int wins;
     private boolean hasEvolved;
     private List<Item> boughtItems; // Daftar item yang dibeli
-
     private List<Element> elements;
 
     public PlayerMonster() {
         super("", 1, new ArrayList<>()); // Call the superclass constructor with default values
         this.elements = new ArrayList<>();
-        this.boughtItems = new ArrayList<>(); // Inisialisasi daftar item yang dibeli
-
-
+        this.boughtItems = new ArrayList<>(); // Inisialisasi daftar boughtItems
     }
 
-    public PlayerMonster(String nama, int level, List<Element> elements, Player owners) {
+    public PlayerMonster(String nama, int level, List<Element> elements, Player owner) {
         super(nama, level, elements);
-        this.owner = owners;
+        this.owner = owner;
         this.wins = 0;
         this.hasEvolved = false;
         this.elements = elements != null ? elements : new ArrayList<>();
-
+        this.boughtItems = new ArrayList<>(); // Inisialisasi daftar boughtItems
     }
 
     public void addItem(Item item) {
@@ -48,17 +45,13 @@ public class PlayerMonster extends Monster {
                 boughtItems.remove(i);
                 break;
             }
-        }    }
+        }
+    }
 
     public List<Item> getBoughtItems() {
         return boughtItems;
     }
 
-    // public void resetWins() {
-    //     this.wins = 0;
-    // }
-
-    // Getter for name
     public String getNama() {
         return super.getNama();
     }
@@ -76,7 +69,6 @@ public class PlayerMonster extends Monster {
     }
 
     public int getWins() {
-
         return wins;
     }
 
@@ -104,7 +96,6 @@ public class PlayerMonster extends Monster {
     public void basicAttack(Monster target) {
         int damage = level * 12; // Contoh: serangan dasar mengurangi 10 HP per level
 
-        // Reduksi HP target
         target.healthPoint -= damage;
 
         System.out.println("SIAAAAAA!!!!!!......");
@@ -124,7 +115,7 @@ public class PlayerMonster extends Monster {
             System.out.println("Special attack missed!");
         } else {
             target.healthPoint -= actualDamage;
-            int sacrificeHP = (int) (healthPoint * 0.1);
+            int sacrificeHP = (int) (healthPoint * 0.2);
             healthPoint -= sacrificeHP;
 
             System.out.println("WUSSSSSHHH!!!!!!......");
@@ -143,8 +134,8 @@ public class PlayerMonster extends Monster {
             int actualDamage = baseDamage * effectiveness;
 
             target.healthPoint -= actualDamage;
-            int sacrificeHP = (int) (healthPoint * 0.2); // 20% sacrifice
-            healthPoint -= sacrificeHP;
+            // int sacrificeHP = (int) (healthPoint * 0.2); // 20% sacrifice
+            // healthPoint -= sacrificeHP;
 
             System.out.println("WINGGGGG!!!!!!.....");
             System.out.println(nama + " melakukan serangan elemen ke " + target.nama);
@@ -157,19 +148,28 @@ public class PlayerMonster extends Monster {
         }
     }
 
+    @Override
+    public void setLevel(int level) throws LevelOutOfBoundsException {
+        super.setLevel(level);
+        if (level < 1 || level > 99) {
+            throw new LevelOutOfBoundsException("Level must be between 1 and 99.");
+        }
+
+    }
+
     private int determineElementalEffectiveness(List<Element> elements) {
         for (Element element : elements) {
             switch (element.getNama().toLowerCase()) {
-                case "WATER":
-                    return element.getNama().equalsIgnoreCase("FIRE") ? 2 : 1;
-                case "EARTH":
-                    return element.getNama().equalsIgnoreCase("WATER") ? 2 : 1;
-                case "FIRE":
-                    return element.getNama().equalsIgnoreCase("ICE") ? 2 : 1;
-                case "ICE":
-                    return element.getNama().equalsIgnoreCase("AIR") ? 2 : 1;
-                case "AIR":
-                    return element.getNama().equalsIgnoreCase("EARTH") ? 2 : 1;
+                case "water":
+                    return element.getNama().equalsIgnoreCase("fire") ? 2 : 1;
+                case "earth":
+                    return element.getNama().equalsIgnoreCase("water") ? 2 : 1;
+                case "fire":
+                    return element.getNama().equalsIgnoreCase("ice") ? 2 : 1;
+                case "ice":
+                    return element.getNama().equalsIgnoreCase("air") ? 2 : 1;
+                case "air":
+                    return element.getNama().equalsIgnoreCase("earth") ? 2 : 1;
                 default:
                     return 1; // Default effectiveness if elements don't match
             }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MainPokemon {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws LevelOutOfBoundsException {
         try {
             System.out.println("Welcome to Pokemon World!");
 
@@ -119,3 +119,10 @@ class GameActionException extends Exception {
         super(message);
     }
 }
+
+class LevelOutOfBoundsException extends Exception {
+    public LevelOutOfBoundsException(String message) {
+        super(message);
+    }
+}
+

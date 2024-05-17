@@ -65,7 +65,7 @@ public class BattleArena {
                     System.out.println("Your monster has fainted!");
                 } else {
                     System.out.println("You defeated the wild monster! Gaining experience...");
-                    myMonster.gainExperiencePoints(30);
+                    myMonster.gainExperiencePoints(35);
                     myMonster.incrementWins(); // Increment wins after winning a battle
                 }
                 battleEnded = true;

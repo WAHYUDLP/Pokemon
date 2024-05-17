@@ -29,7 +29,7 @@ public class GameProgress {
         }
     }
 
-    public static PlayerMonster loadProgress() {
+    public static PlayerMonster loadProgress() throws LevelOutOfBoundsException {
         PlayerMonster playerMonster = new PlayerMonster();
         try (BufferedReader reader = new BufferedReader(new FileReader(SAVE_FILE_PATH))) {
             String line;

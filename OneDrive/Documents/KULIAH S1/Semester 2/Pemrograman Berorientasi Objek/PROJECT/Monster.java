@@ -40,7 +40,7 @@ public abstract class Monster implements BattleActions {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(int level) throws LevelOutOfBoundsException {
         this.level = level;
     }
 
