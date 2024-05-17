@@ -99,14 +99,11 @@ public class WildMonster extends Monster {
     
     @Override
     public boolean flee() {
-        // Calculate chance of successfully fleeing (e.g., 30% chance)
         boolean success = Math.random() < 0.3; // 30% chance of success
 
         if (success) {
             System.out.println("Successfully fled from the battle.");
-            // Implement logic to move to Dungeon and exit battle arena (assuming Dungeon
-            // and BattleArena classes exist)
-
+   
         } else {
             System.out.println("Failed to flee. The battle continues.");
         }
@@ -143,6 +140,12 @@ public class WildMonster extends Monster {
     public void useItem(Item item, Monster target) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'useItem'");
+    }
+
+    @Override
+    protected void incrementWins() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'incrementWins'");
     }
 
 }

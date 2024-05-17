@@ -1,7 +1,9 @@
 ========== GAME PROGRESS ==========
-Name: Your Monster
+Name: Pokemon
 Level: 1
-Experience Points: 50
-Health Points: 19
+Experience Points: 10
+Health Points: 100
 Wins: 1
+Element: WATER
+Evolved: false
 ===================================

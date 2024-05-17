@@ -9,38 +9,53 @@ public class MainPokemon {
     public static void main(String[] args) {
         try {
             System.out.println("Welcome to Pokemon World!");
-            System.out.print("Enter your player name: ");
-            String playerName = scanner.nextLine();
 
-            Player player = new Player(playerName);
-            System.out.println("Player " + playerName + " starts the adventure!");
+            // Load game progress at the start
+            PlayerMonster playerMonster = GameProgress.loadProgress();
+            if (playerMonster == null) {
+                // If no previous game progress is found, create a new player and player monster
+                System.out.print("Enter your player name: ");
+                String playerName = scanner.nextLine();
 
-            PlayerMonster playerMonster = new PlayerMonster("Your Monster", 1, List.of(Element.AIR), player);
+                Player player = new Player(playerName);
+                System.out.println("Player " + playerName + " starts the adventure!");
+
+                playerMonster = new PlayerMonster("Pokemon", 1, List.of(Element.WATER), player);
+            }
+
+            // Tampilkan informasi tentang monster pemain
+            displayMonsterInfo(playerMonster);
 
             HomeBase homeBase = new HomeBase();
-            BattleArena battleArena = new BattleArena(); // Create BattleArena object and pass HomeBase object
+            BattleArena battleArena = new BattleArena(); // Create BattleArena object
             Dungeon dungeon = new Dungeon(battleArena); // Pass BattleArena object to Dungeon
 
             boolean gameRunning = true;
             while (gameRunning) {
                 System.out.println("\nWhat do you want to do?");
-                System.out.println("1. Enter Dungeon");
-                System.out.println("2. Enter Home Base");
+                System.out.println("1. Enter Home Base");
+                System.out.println("2. Enter Dungeon");
                 System.out.println("3. Exit and Save");
+                System.out.println("4. Exit and Delete Progress");
 
                 try {
                     int choice = getNextInt();
                     switch (choice) {
                         case 1:
-                            System.out.println("Welcome to Dungeon");
-                            dungeon.explore(playerMonster);
+                            homeBase.enterHomeBase(playerMonster);
                             break;
                         case 2:
-                            homeBase.enterHomeBase(playerMonster);
+                            System.out.println("Welcome to Dungeon");
+                            dungeon.explore(playerMonster);
                             break;
                         case 3:
                             System.out.println("Exiting Pokemon World. Goodbye!");
                             GameProgress.saveProgress(playerMonster); // Save game progress
+                            gameRunning = false;
+                            break;
+                        case 4:
+                            System.out.println("Deleting game progress and exiting...");
+                            GameProgress.deleteProgress(); // Delete game progress
                             gameRunning = false;
                             break;
                         default:
@@ -67,6 +82,22 @@ public class MainPokemon {
         } catch (NoSuchElementException e) {
             throw new GameActionException("Input stream closed unexpectedly.");
         }
+    }
+
+    // Metode untuk menampilkan informasi tentang monster pemain
+    private static void displayMonsterInfo(PlayerMonster monster) {
+        System.out.println("\nMonster Information:");
+        System.out.println("Name                \t: " + monster.getNama());
+        System.out.println("Level               \t: " + monster.getLevel());
+        System.out.println("Experience Points   \t: " + monster.getExpPoint());
+        System.out.println("Health Points       \t: " + monster.getHealthPoint());
+        System.out.println("Wins                \t: " + monster.getWins());
+        if (monster.getElement().isEmpty()) {
+            System.out.println("Element       \t: None");
+        } else {
+            System.out.println("Element          \t: " + monster.getElement().get(0).getNama());
+        }
+        System.out.println("Evolved              \t: " + (monster.hasEvolved() ? "Yes" : "No"));
     }
 }
 

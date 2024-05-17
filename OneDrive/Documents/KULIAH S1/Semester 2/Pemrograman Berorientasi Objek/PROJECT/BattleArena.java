@@ -34,7 +34,11 @@ public class BattleArena {
                         myMonster.elementalAttack(wildMonster);
                         break;
                     case 4:
-                        useItem(scanner, myMonster);
+                        if (myMonster instanceof PlayerMonster) {
+                            useItem(scanner, (PlayerMonster) myMonster);
+                        } else {
+                            System.out.println("Only player-controlled monsters can use items.");
+                        }
                         break;
                     case 5:
                         if (myMonster.flee()) {
@@ -61,7 +65,7 @@ public class BattleArena {
                     System.out.println("Your monster has fainted!");
                 } else {
                     System.out.println("You defeated the wild monster! Gaining experience...");
-                    myMonster.gainExperiencePoints(50);
+                    myMonster.gainExperiencePoints(30);
                     myMonster.incrementWins(); // Increment wins after winning a battle
                 }
                 battleEnded = true;
@@ -71,7 +75,7 @@ public class BattleArena {
         healthItemUsed = false; // Reset the flag for the next battle
     }
 
-    private void useItem(Scanner scanner, Monster myMonster) {
+    private void useItem(Scanner scanner, PlayerMonster playerMonster) {
         System.out.println("Available Items: 1. Health Potion (+20 HP), 2. Elemental Potion (Change Element)");
         System.out.println("Select an item to use:");
         int itemChoice = scanner.nextInt();
@@ -79,19 +83,27 @@ public class BattleArena {
 
         switch (itemChoice) {
             case 1: // Health Potion
-                if (!healthItemUsed) {
-                    myMonster.setHealthPoint(myMonster.getHealthPoint() + 20); // Assuming +20 HP for health potion
-                    healthItemUsed = true;
-                    System.out.println(myMonster.getNama() + " used Health Potion. Gained 20 HP.");
+                Item healthPotion = new Item("Health Potion", 20, 0);
+                if (playerMonster.hasItem(healthPotion)) {
+                    playerMonster.setHealthPoint(playerMonster.getHealthPoint() + 20); // Assuming +20 HP for health
+                                                                                       // potion
+                    playerMonster.useItem(healthPotion);
+                    System.out.println(playerMonster.getNama() + " used Health Potion. Gained 20 HP.");
                 } else {
-                    System.out.println("Health Potion can only be used once per battle.");
+                    System.out.println("Health Potion not purchased.");
                 }
                 break;
             case 2: // Elemental Potion
-                System.out.println("Select an element: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
-                int elementChoice = scanner.nextInt();
-                scanner.nextLine();
-                applyElementalPotion(myMonster, elementChoice);
+                Item elementalPotion = new Item("Elemental Potion", 0, 0);
+                if (playerMonster.hasItem(elementalPotion)) {
+                    System.out.println("Select an element: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
+                    int elementChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    applyElementalPotion(playerMonster, elementChoice);
+                    playerMonster.useItem(elementalPotion);
+                } else {
+                    System.out.println("Elemental Potion not purchased.");
+                }
                 break;
             default:
                 System.out.println("Invalid item selection.");
@@ -99,30 +111,21 @@ public class BattleArena {
         }
     }
 
-    private void applyElementalPotion(Monster myMonster, int elementChoice) {
-        Element newElement = null;
-        switch (elementChoice) {
-            case 1:
-                newElement = Element.API;
-                break;
-            case 2:
-                newElement = Element.AIR;
-                break;
-            case 3:
-                newElement = Element.ES;
-                break;
-            case 4:
-                newElement = Element.TANAH;
-                break;
-            case 5:
-                newElement = Element.ANGIN;
-                break;
-            default:
-                System.out.println("Invalid element selection.");
-                return;
+    private void applyElementalPotion(PlayerMonster playerMonster, int elementChoice) {
+        Element newElement = switch (elementChoice) {
+            case 1 -> Element.FIRE;
+            case 2 -> Element.WATER;
+            case 3 -> Element.AIR;
+            case 4 -> Element.EARTH;
+            case 5 -> Element.ICE;
+            default -> null;
+        };
+        if (newElement != null) {
+            playerMonster.setElement(List.of(newElement));
+            System.out.println(playerMonster.getNama() + " changed element to " + newElement.getNama());
+        } else {
+            System.out.println("Invalid element choice. Potion has no effect.");
         }
-        myMonster.setElement(List.of(newElement));
-        System.out.println(myMonster.getNama() + " has changed to " + newElement.getNama() + " element.");
     }
 
 }
