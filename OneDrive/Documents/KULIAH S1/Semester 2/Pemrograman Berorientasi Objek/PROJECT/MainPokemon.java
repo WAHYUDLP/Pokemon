@@ -35,11 +35,11 @@ public class MainPokemon {
                 System.out.println("\nWhat do you want to do?");
                 System.out.println("1. Enter Home Base");
                 System.out.println("2. Enter Dungeon");
-                System.out.println("3. Exit and Save");
-                System.out.println("4. Exit and Delete Progress");
+                System.out.println("3. Exit Game");
 
                 try {
                     int choice = getNextInt();
+                    scanner.nextLine(); // Consume the newline character after nextInt
                     switch (choice) {
                         case 1:
                             homeBase.enterHomeBase(playerMonster);
@@ -49,14 +49,27 @@ public class MainPokemon {
                             dungeon.explore(playerMonster);
                             break;
                         case 3:
-                            System.out.println("Exiting Pokemon World. Goodbye!");
-                            GameProgress.saveProgress(playerMonster); // Save game progress
-                            gameRunning = false;
-                            break;
-                        case 4:
-                            System.out.println("Deleting game progress and exiting...");
-                            GameProgress.deleteProgress(); // Delete game progress
-                            gameRunning = false;
+                            System.out.println("Do you want to save or delete progress?");
+                            System.out.println("1. Save Progress");
+                            System.out.println("2. Delete Progress");
+                            System.out.println("3. Cancel");
+
+                            int exitChoice = getNextInt();
+                            scanner.nextLine(); // Consume the newline character after nextInt
+
+                            if (exitChoice == 1) {
+                                GameProgress.saveProgress(playerMonster);
+                                System.out.println("Exiting game...");
+                                gameRunning = false;
+                            } else if (exitChoice == 2) {
+                                GameProgress.deleteProgress();
+                                System.out.println("Exiting game...");
+                                gameRunning = false;
+                            } else if (exitChoice == 3) {
+                                System.out.println("Canceling exit.");
+                            } else {
+                                System.out.println("Invalid choice. Please choose again.");
+                            }
                             break;
                         default:
                             System.out.println("Invalid choice. Please choose again.");

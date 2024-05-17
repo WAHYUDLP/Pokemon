@@ -34,20 +34,29 @@ public class PlayerMonster extends Monster {
     }
 
     public boolean hasItem(Item item) {
-        return this.boughtItems.contains(item);
+        for (Item invItem : boughtItems) {
+            if (invItem.getNama().equals(item.getNama())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void useItem(Item item) {
-        this.boughtItems.remove(item);
-    }
+        for (int i = 0; i < boughtItems.size(); i++) {
+            if (boughtItems.get(i).getNama().equals(item.getNama())) {
+                boughtItems.remove(i);
+                break;
+            }
+        }    }
 
     public List<Item> getBoughtItems() {
         return boughtItems;
     }
 
-    public void resetWins() {
-        this.wins = 0;
-    }
+    // public void resetWins() {
+    //     this.wins = 0;
+    // }
 
     // Getter for name
     public String getNama() {

@@ -62,7 +62,7 @@ public class GameProgress {
             }
             System.out.println("Game progress loaded successfully.");
         } catch (IOException e) {
-            System.out.println("Error loading game progress: " + e.getMessage());
+            System.out.println();
             return null;
         }
         return playerMonster;
