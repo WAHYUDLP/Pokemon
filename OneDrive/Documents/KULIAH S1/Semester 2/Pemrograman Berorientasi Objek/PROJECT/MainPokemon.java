@@ -66,7 +66,7 @@ public class MainPokemon {
                                 System.out.println("Exiting game...");
                                 gameRunning = false;
                             } else if (exitChoice == 3) {
-                                System.out.println("Canceling exit.");
+                                System.out.println("Canceling exit...");
                             } else {
                                 System.out.println("Invalid choice. Please choose again.");
                             }
@@ -98,7 +98,7 @@ public class MainPokemon {
     }
 
     // Metode untuk menampilkan informasi tentang monster pemain
-    private static void displayMonsterInfo(PlayerMonster monster) {
+    public static void displayMonsterInfo(PlayerMonster monster) {
         System.out.println("\nMonster Information:");
         System.out.println("Name                \t: " + monster.getNama());
         System.out.println("Level               \t: " + monster.getLevel());

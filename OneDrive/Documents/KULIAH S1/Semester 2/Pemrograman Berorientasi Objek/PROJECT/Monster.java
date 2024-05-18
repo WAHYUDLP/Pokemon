@@ -2,9 +2,9 @@ import java.util.List;
 
 public abstract class Monster implements BattleActions {
     // Attributes
-    String nama;
-    int level;
-    int healthPoint;
+   protected String nama;
+   protected int level;
+    public  int healthPoint;
     int expPoint;
     List<Element> element;
     // Atribut lainnya

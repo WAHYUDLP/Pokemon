@@ -63,5 +63,11 @@ public class Element {
 
     public static Element fromString(String elementName) {
         return ELEMENTS.get(elementName.toUpperCase());
+ 
+    }
+    public void evolutionOptions(Element element) {
+        if (!evolutionOptions.contains(element)) {
+            evolutionOptions.add(element);
+        }
     }
 }

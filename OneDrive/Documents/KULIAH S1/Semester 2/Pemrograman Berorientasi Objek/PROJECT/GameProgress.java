@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.List;
 import java.util.*;
 
 public class GameProgress {
@@ -28,46 +27,82 @@ public class GameProgress {
             System.out.println("Error saving game progress: " + e.getMessage());
         }
     }
-
     public static PlayerMonster loadProgress() throws LevelOutOfBoundsException {
-        PlayerMonster playerMonster = new PlayerMonster();
+        File saveFile = new File(SAVE_FILE_PATH);
+        if (!saveFile.exists()) {
+            System.out.println("No saved game progress found.");
+            return null;
+        }
+    
         try (BufferedReader reader = new BufferedReader(new FileReader(SAVE_FILE_PATH))) {
             String line;
+            String name = null;
+            int level = 0;
+            int expPoints = 0;
+            int healthPoints = 0;
+            int wins = 0;
+            String elementName = null;
+            boolean evolved = false;
+    
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Name              \t: ")) {
-                    String name = line.substring(24).trim();
-                    playerMonster.setNama(name);
-                } else if (line.startsWith("Level             \t: ")) {
-                    int level = Integer.parseInt(line.substring(24).trim());
-                    playerMonster.setLevel(level);
-                } else if (line.startsWith("Experience Points \t: ")) {
-                    String[] parts = line.split(":\\s+");
-                    int expPoints = Integer.parseInt(parts[1].trim());
-                    playerMonster.setExpPoint(expPoints);
-                } else if (line.startsWith("Health Points     \t: ")) {
-                    int healthPoints = Integer.parseInt(line.substring(24).trim());
-                    playerMonster.setHealthPoint(healthPoints);
-                } else if (line.startsWith("Wins              \t: ")) {
-                    int wins = Integer.parseInt(line.substring(24).trim());
-                    playerMonster.setWins(wins);
-                } else if (line.startsWith("Evolved           \t: ")) {
-                    boolean evolved = Boolean.parseBoolean(line.substring(24).trim());
-                    playerMonster.setHasEvolved(evolved);
-                } else if (line.startsWith("Element           \t: ")) {
-                    String elementName = line.substring(24).trim();
-                    if (!elementName.equals("None")) {
-                        Element element = Element.fromString(elementName);
-                        playerMonster.setElement(List.of(element));
-                    }
+                if (line.startsWith("Name")) {
+                    name = line.split(":")[1].trim();
+                } else if (line.startsWith("Level")) {
+                    level = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Experience Points")) {
+                    expPoints = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Health Points")) {
+                    healthPoints = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Wins")) {
+                    wins = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Element")) {
+                    elementName = line.split(":")[1].trim();
+                } else if (line.startsWith("Evolved")) {
+                    evolved = Boolean.parseBoolean(line.split(":")[1].trim());
                 }
             }
+    
+            Element element = elementName.equals("None") ? null : new Element(elementName);
+            if (element != null) {
+                switch (elementName.toUpperCase()) {
+                    case "FIRE":
+                        element = Element.FIRE;
+                        break;
+                    case "WATER":
+                        element = Element.WATER;
+                        break;
+                    case "EARTH":
+                        element = Element.EARTH;
+                        break;
+                    case "WIND":
+                        element = Element.WIND;
+                        break;
+                    case "ICE":
+                        element = Element.ICE;
+                        break;
+                    default:
+                        element = new Element(elementName); // Initialize with new Element
+                }
+            }
+    
+            List<Element> elements = element == null ? new ArrayList<>() : List.of(element);
+    
+            Player player = new Player("LoadedPlayer"); // Set player with default or required name
+            PlayerMonster playerMonster = new PlayerMonster(name, level, elements, player);
+            playerMonster.setExpPoint(expPoints);
+            playerMonster.setHealthPoint(healthPoints);
+            playerMonster.setWins(wins);
+            playerMonster.setHasEvolved(evolved);
+    
             System.out.println("Game progress loaded successfully.");
+            return playerMonster;
+    
         } catch (IOException e) {
             System.out.println("Error loading game progress: " + e.getMessage());
             return null;
         }
-        return playerMonster;
     }
+    
 
 
     public static void deleteProgress() {

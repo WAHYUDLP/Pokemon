@@ -24,24 +24,45 @@ public class HomeBase {
             }
         } else {
             System.out.println(monster.getNama() + " is currently at level " + monster.getLevel() + ".");
-            System.out.println(monster.getNama() + " needs to win every 5 battles and have at least 50 EP to level up.");
+            System.out
+                    .println(monster.getNama() + " needs to win every 5 battles and have at least 50 EP to level up.");
             System.out.println("Your wins: " + monster.getWins() + ", Your EP: " + monster.getExpPoint());
         }
     }
+    // public void evolveMonster(PlayerMonster monster, Element newElement) {
+    // if (!monster.getElement().isEmpty() && !monster.hasEvolved()) {
+    // Element currentElement = monster.getElement().get(0);
+    // List<Element> evolutionOptions = currentElement.getEvolutionOptions();
+    // if (evolutionOptions != null && evolutionOptions.contains(newElement)) {
+    // monster.setElement(List.of(newElement));
+    // monster.setHasEvolved(true);
+    // System.out.println(monster.getNama() + " has evolved into " +
+    // newElement.getNama() + ".");
+    // } else if (monster.hasEvolved()) {
+    // System.out.println(monster.getNama() + " has already evolved this level.");
+    // } else if (monster.getElement().isEmpty()) {
+    // System.out.println("The monster has no initial element.");
+    // } else {
+    // System.out.println("Evolution to " + newElement.getNama() + " is not allowed
+    // from " + currentElement.getNama() + ".");
+    // }
+    // }
+    // }
+    
 
     public void evolveMonster(PlayerMonster monster, Element newElement) {
         if (!monster.getElement().isEmpty() && !monster.hasEvolved()
                 && monster.getElement().get(0).getEvolutionOptions().contains(newElement)) {
             monster.setElement(List.of(newElement));
             monster.setHasEvolved(true);
-            System.out.println(monster.getNama() + " has evolved into " + newElement.getNama()+".");
+            System.out.println(monster.getNama() + " has evolved into " + newElement.getNama() + ".");
         } else if (monster.hasEvolved()) {
             System.out.println(monster.getNama() + " has already evolved this level.");
         } else if (monster.getElement().isEmpty()) {
             System.out.println("The monster has no initial element.");
         } else {
             System.out.println("Evolution to " + newElement.getNama() + " is not allowed from "
-                    + monster.getElement().get(0).getNama() +".");
+                    + monster.getElement().get(0).getNama() + ".");
         }
     }
 
@@ -54,7 +75,7 @@ public class HomeBase {
         if (monster.getExpPoint() >= 20) {
             monster.setExpPoint(monster.getExpPoint() - 20);
             monster.addItem(item);
-            System.out.println("Bought " + item.getNama()+".");
+            System.out.println("Bought " + item.getNama() + ".");
         } else {
             System.out.println("Not enough EP to buy " + item.getNama() + ", you must have minimum 20 EP.");
         }
@@ -85,7 +106,7 @@ public class HomeBase {
             System.out.println("3. Heal Monster");
             System.out.println("4. Evolve Monster");
             System.out.println("5. Buy Item");
-            System.out.println("6. Exit Home Base");
+            System.out.println("6. Exit and Save Home Base");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
@@ -123,6 +144,7 @@ public class HomeBase {
                     checkEP(playerMonster);
                     break;
                 case 6:
+                    GameProgress.saveProgress(playerMonster);
                     done = true;
                     break;
                 default:

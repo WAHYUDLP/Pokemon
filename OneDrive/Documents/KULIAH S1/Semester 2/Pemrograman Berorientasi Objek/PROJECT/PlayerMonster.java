@@ -129,27 +129,44 @@ public class PlayerMonster extends Monster {
 
     @Override
     public void elementalAttack(Monster target) {
-        if (element != null && target.element != null) {
-            Element playerElement = element.get(0); // Pastikan ini diinisialisasi dengan benar
-
-            int effectiveness = determineElementalEffectiveness(target.element);
-            int baseDamage = level * 20; // Example: elemental attack deals 20 HP per level
+        if (elements != null && !elements.isEmpty() && target.getElement() != null && !target.getElement().isEmpty()) {
+            Element playerElement = elements.get(0); // Gunakan elemen saat ini dari PlayerMonster
+    
+            int effectiveness = determineElementalEffectiveness(playerElement, target.getElement().get(0));
+            int baseDamage = level * 20; // Contoh: serangan elemental mengurangi 20 HP per level
             int actualDamage = baseDamage * effectiveness;
-
+    
             target.healthPoint -= actualDamage;
             String attackMessage = getElementalAttackMessage(playerElement);
             System.out.println(attackMessage);
-
+    
             System.out.println(nama + " performed an elemental attack on " + target.nama);
             System.out.println("The attack reduced " + target.nama + "'s HP by " + actualDamage);
             System.out.println(target.nama + " now has " + target.healthPoint + " HP");
             System.out.println(nama + " has " + healthPoint + " HP remaining");
-
+    
         } else {
             System.out.println("Cannot perform elemental attack. Invalid elements.");
         }
     }
-
+    
+    private int determineElementalEffectiveness(Element playerElement, Element targetElement) {
+        switch (playerElement.getNama().toUpperCase()) {
+            case "FIRE":
+                return targetElement.getNama().equalsIgnoreCase("ICE") ? 2 : 1;
+            case "WATER":
+                return targetElement.getNama().equalsIgnoreCase("FIRE") ? 2 : 1;
+            case "EARTH":
+                return targetElement.getNama().equalsIgnoreCase("WATER") ? 2 : 1;
+            case "WIND":
+                return targetElement.getNama().equalsIgnoreCase("EARTH") ? 2 : 1;
+            case "ICE":
+                return targetElement.getNama().equalsIgnoreCase("WIND") ? 2 : 1;
+            default:
+                return 1; // Default effectiveness if elements don't match
+        }
+    }
+    
     private String getElementalAttackMessage(Element element) {
         switch (element.getNama().toUpperCase()) {
             case "FIRE":
@@ -166,7 +183,7 @@ public class PlayerMonster extends Monster {
                 return "Elemental attack!";
         }
     }
-
+    
     @Override
     public void setLevel(int level) throws LevelOutOfBoundsException {
         super.setLevel(level);
@@ -176,25 +193,25 @@ public class PlayerMonster extends Monster {
 
     }
 
-    private int determineElementalEffectiveness(List<Element> elements) {
-        for (Element element : elements) {
-            switch (element.getNama().toLowerCase()) {
-                case "water":
-                    return element.getNama().equalsIgnoreCase("fire") ? 2 : 1;
-                case "earth":
-                    return element.getNama().equalsIgnoreCase("water") ? 2 : 1;
-                case "fire":
-                    return element.getNama().equalsIgnoreCase("ice") ? 2 : 1;
-                case "ice":
-                    return element.getNama().equalsIgnoreCase("air") ? 2 : 1;
-                case "air":
-                    return element.getNama().equalsIgnoreCase("earth") ? 2 : 1;
-                default:
-                    return 1; // Default effectiveness if elements don't match
-            }
-        }
-        return 1; // Default effectiveness if no matching element is found
-    }
+    // private int determineElementalEffectiveness(List<Element> elements) {
+    //     for (Element element : elements) {
+    //         switch (element.getNama().toLowerCase()) {
+    //             case "water":
+    //                 return element.getNama().equalsIgnoreCase("fire") ? 2 : 1;
+    //             case "earth":
+    //                 return element.getNama().equalsIgnoreCase("water") ? 2 : 1;
+    //             case "fire":
+    //                 return element.getNama().equalsIgnoreCase("ice") ? 2 : 1;
+    //             case "ice":
+    //                 return element.getNama().equalsIgnoreCase("air") ? 2 : 1;
+    //             case "air":
+    //                 return element.getNama().equalsIgnoreCase("earth") ? 2 : 1;
+    //             default:
+    //                 return 1; // Default effectiveness if elements don't match
+    //         }
+    //     }
+    //     return 1; // Default effectiveness if no matching element is found
+    // }
 
     @Override
     public void useItem(Item item, Monster target) {
@@ -278,4 +295,6 @@ public class PlayerMonster extends Monster {
     public void setWins(int wins) {
         this.wins = wins;
     }
+
+    
 }
