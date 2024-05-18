@@ -11,7 +11,7 @@ public class Element {
 
     // Definisi elemen-elemen
     public static final Element FIRE = new Element("FIRE");
-    public static final Element AIR = new Element("AIR");
+    public static final Element WIND = new Element("WIND");
     public static final Element WATER = new Element("WATER");
     public static final Element ICE = new Element("ICE");
     public static final Element EARTH = new Element("EARTH");
@@ -22,20 +22,20 @@ public class Element {
         // Mengatur kelemahan setiap elemen
         FIRE.weakness = Arrays.asList(WATER);
         ICE.weakness = Arrays.asList(FIRE);
-        AIR.weakness = Arrays.asList(ICE);
-        EARTH.weakness = Arrays.asList(AIR);
+        WIND.weakness = Arrays.asList(ICE);
+        EARTH.weakness = Arrays.asList(WIND);
         WATER.weakness = Arrays.asList(EARTH);
 
         // Mengatur pilihan evolusi setiap elemen
-        FIRE.evolutionOptions = Arrays.asList(AIR, EARTH);
-        AIR.evolutionOptions = Arrays.asList(FIRE, WATER);
-        WATER.evolutionOptions = Arrays.asList(ICE, AIR);
+        FIRE.evolutionOptions = Arrays.asList(WIND, EARTH);
+        WIND.evolutionOptions = Arrays.asList(FIRE, WATER);
+        WATER.evolutionOptions = Arrays.asList(ICE, WIND);
         ICE.evolutionOptions = Arrays.asList(WATER, EARTH);
         EARTH.evolutionOptions = Arrays.asList(FIRE, ICE);
 
         // Mengisi peta elemen
         ELEMENTS.put(FIRE.getNama(), FIRE);
-        ELEMENTS.put(AIR.getNama(), AIR);
+        ELEMENTS.put(WIND.getNama(), WIND);
         ELEMENTS.put(WATER.getNama(), WATER);
         ELEMENTS.put(ICE.getNama(), ICE);
         ELEMENTS.put(EARTH.getNama(), EARTH);

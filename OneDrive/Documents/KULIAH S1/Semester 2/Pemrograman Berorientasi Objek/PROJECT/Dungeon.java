@@ -10,20 +10,15 @@ public class Dungeon {
     public Dungeon(BattleArena battleArena) {
         this.monsters = new ArrayList<>();
         this.random = new Random();
-        this.battleArena = battleArena; // Tambahkan inisialisasi BattleArena
-        // Asal beberapa monster
+        this.battleArena = battleArena; 
         generateMonster();
     }
 
-    // Metode lain di Dungeon
 
 
     private void generateMonster() {
-         // Add the existing monsters
     monsters.add(new WildMonster("Aqua Spirit", 4, List.of(new Element("AIR")), true));
     monsters.add(new WildMonster("Drake", 5, List.of(new Element("API")), false));
-
-    // Add 30 additional monsters
     monsters.add(new WildMonster("Terra Beast", 3, List.of(new Element("TANAH")), false));
     monsters.add(new WildMonster("Flame Phoenix", 6, List.of(new Element("API")), true));
     monsters.add(new WildMonster("Frost Wyvern", 7, List.of(new Element("ES")), true));
@@ -62,7 +57,7 @@ public class Dungeon {
 
         int encounterChance = random.nextInt(100);  // Random chance generation
         if (encounterChance < 50) {  // 50% chance to encounter a monster
-            Monster wildMonster = getMonster();
+            Monster wildMonster = getMonsterRandom();
             System.out.println("A wild " + wildMonster.getNama() + " appears!");
             battleArena.startBattle(playerMonster, wildMonster);
         } else {
@@ -72,7 +67,7 @@ public class Dungeon {
     
 
     void startBattle(Player player) {
-        Monster wildMonster = getMonster();
+        Monster wildMonster = getMonsterRandom();
         if (wildMonster != null) {
             System.out.println("A wild " + wildMonster.getNama() + " appears!");
             player.battleMonster(wildMonster);
@@ -82,9 +77,10 @@ public class Dungeon {
         }
     }
 
-    private Monster getMonster() {
+    private Monster getMonsterRandom() {
         if (!monsters.isEmpty()) {
-            return monsters.remove(0);
+            int index = random.nextInt(monsters.size());
+            return monsters.remove(index);
         }
         return null;
     }

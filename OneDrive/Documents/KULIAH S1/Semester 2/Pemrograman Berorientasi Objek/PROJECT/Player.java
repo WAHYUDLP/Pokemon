@@ -58,6 +58,5 @@ public class Player {
 
     public void useItem(Item elementalPotion, Monster monster) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'useItem'");
     }
 }

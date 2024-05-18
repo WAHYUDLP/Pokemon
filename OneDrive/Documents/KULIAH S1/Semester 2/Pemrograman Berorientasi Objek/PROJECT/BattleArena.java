@@ -6,7 +6,7 @@ public class BattleArena {
 
     public void startBattle(Monster myMonster, Monster wildMonster) {
         System.out.println("Welcome to the Battle Arena!");
-        System.out.println("Battle started between " + myMonster.getNama() + " and " + wildMonster.getNama());
+        System.out.println("Battle started between " + myMonster.getNama() + " and " + wildMonster.getNama()+".");
 
         Scanner scanner = new Scanner(System.in);
         boolean battleEnded = false;
@@ -42,7 +42,6 @@ public class BattleArena {
                         break;
                     case 5:
                         if (myMonster.flee()) {
-                            System.out.println("Successfully fled from the battle!");
                             battleEnded = true;
                         } else {
                             System.out.println("Failed to flee!");
@@ -96,7 +95,7 @@ public class BattleArena {
             case 2: // Elemental Potion
                 Item elementalPotion = new Item("Elemental Potion", 0, 0);
                 if (playerMonster.hasItem(elementalPotion)) {
-                    System.out.println("Select an element: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
+                    System.out.println("Select an element: 1. Fire, 2. Ice, 3. Wind, 4. Earth, 5. Water");
                     int elementChoice = scanner.nextInt();
                     scanner.nextLine();
                     applyElementalPotion(playerMonster, elementChoice);
@@ -114,15 +113,15 @@ public class BattleArena {
     private void applyElementalPotion(PlayerMonster playerMonster, int elementChoice) {
         Element newElement = switch (elementChoice) {
             case 1 -> Element.FIRE;
-            case 2 -> Element.WATER;
-            case 3 -> Element.AIR;
+            case 5 -> Element.WATER;
+            case 3 -> Element.WIND;
             case 4 -> Element.EARTH;
-            case 5 -> Element.ICE;
+            case 2 -> Element.ICE;
             default -> null;
         };
         if (newElement != null) {
             playerMonster.setElement(List.of(newElement));
-            System.out.println(playerMonster.getNama() + " changed element to " + newElement.getNama());
+            System.out.println(playerMonster.getNama() + " changed element to " + newElement.getNama() +".");
         } else {
             System.out.println("Invalid element choice. Potion has no effect.");
         }

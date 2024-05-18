@@ -47,23 +47,21 @@ public class WildMonster extends Monster {
     public boolean getIsAggressive() {
         return isAggressive;
     }
-
     @Override
     public void basicAttack(Monster target) {
-        int damage = isAggressive ? random.nextInt(10) : random.nextInt(5) + 1; // Generates damage 1-25 if aggressive, 1-10 if not
+        int damage = isAggressive ? random.nextInt(25) + 1 : random.nextInt(10) + 1; // Generates damage 1-25 if aggressive, 1-10 if not
         target.healthPoint -= damage;
     
         System.out.println("SWINGG\n");
-        System.out.println("Monstermu diserang sebanyak " + damage + " HP!");
-        System.out.println(target.nama + " memiliki " + target.healthPoint + " HP");
-        System.out.println(nama + " memiliki " + healthPoint + " HP");
+        System.out.println("Your monster attacked and dealt " + damage + " HP damage!");
+        System.out.println(target.nama + " now has " + target.healthPoint + " HP");
+        System.out.println(nama + " has " + healthPoint + " HP remaining");
     }
     
-
     @Override
     public void specialAttack(Monster target) {
         int baseDamage = isAggressive ? 5 : 1;  // Base damage is lower if not aggressive
-        int actualDamage = random.nextInt(isAggressive ? 13 : 8) + baseDamage;  // Random damage 5-25 if aggressive, 1-10 if not
+        int actualDamage = random.nextInt(isAggressive ? 21 : 10) + baseDamage;  // Random damage 5-25 if aggressive, 1-10 if not
     
         boolean miss = Math.random() < 0.1;  // 10% chance of missing
     
@@ -73,27 +71,47 @@ public class WildMonster extends Monster {
             target.healthPoint -= actualDamage;
     
             System.out.println("BOM....\n");
-            System.out.println("Monstermu diserang sebanyak " + actualDamage + " HP!!");
-            System.out.println(target.nama + " memiliki " + target.healthPoint + " HP");
-            System.out.println(nama + " memiliki " + healthPoint + " HP");
+            System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
+            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
+            System.out.println(nama + " has " + healthPoint + " HP remaining");
         }
     }
     
-
     @Override
     public void elementalAttack(Monster target) {
         if (element != null && target.element != null) {
+            Element playerElement = element.get(0);  // Pastikan ini diinisialisasi dengan benar
+
             int baseDamage = isAggressive ? 7 : 1;  // Base damage is lower if not aggressive
-            int actualDamage = random.nextInt(isAggressive ? 14 : 10) + baseDamage;  // Random damage 7-25 if aggressive, 1-10 if not
+            int actualDamage = random.nextInt(isAggressive ? 19 : 10) + baseDamage;  // Random damage 7-25 if aggressive, 1-10 if not
     
             target.healthPoint -= actualDamage;
     
-            System.out.println("DUAR...\n");
-            System.out.println("Monstermu diserang sebanyak " + actualDamage + " HP!!");
-            System.out.println(target.nama + " memiliki " + target.healthPoint + " HP");
-            System.out.println(nama + " memiliki HP " + healthPoint + " HP");
+            String attackMessage = getElementalAttackMessage(playerElement);
+            System.out.println(attackMessage);
+
+            System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
+            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
+            System.out.println(nama + " has " + healthPoint + " HP remaining");
         } else {
-            System.out.println("Tidak dapat menyerang, elemen tidak ada");
+            System.out.println("Cannot perform elemental attack. Invalid elements.");
+        }
+    }
+
+    private String getElementalAttackMessage(Element element) {
+        switch (element.getNama().toUpperCase()) {
+            case "FIRE":
+                return "Blazing flames!";
+            case "WIND":
+                return "The wind roars!";
+            case "WATER":
+                return "Aqua splash!";
+            case "ICE":
+                return "Freezing cold!";
+            case "EARTH":
+                return "Earthquake shakes!";
+            default:
+                return "Elemental attack!";
         }
     }
     

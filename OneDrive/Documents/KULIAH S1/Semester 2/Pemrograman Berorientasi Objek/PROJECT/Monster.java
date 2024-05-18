@@ -65,9 +65,7 @@ public abstract class Monster implements BattleActions {
 
     // Abstract Methods
     public abstract void basicAttack(Monster target);
-
     public abstract void specialAttack(Monster target);
-
     public abstract void elementalAttack(Monster target);
 
     public abstract void useItem(Item item, Monster target);

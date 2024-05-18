@@ -1,9 +1,9 @@
 ========== GAME PROGRESS ==========
-Name: Pokemon
-Level: 1
-Experience Points: 30
-Health Points: 23
-Wins: 2
-Element: AIR
-Evolved: true
+Name              	: Pokemon
+Level             	: 1
+Experience Points 	: 0
+Health Points     	: 100
+Wins              	: 0
+Element            	: WATER
+Evolved           	: false
 ===================================

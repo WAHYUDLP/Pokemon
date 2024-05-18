@@ -10,7 +10,7 @@ public class MainPokemon {
         try {
             System.out.println("Welcome to Pokemon World!");
 
-            // Load game progress at the start
+            // Load game progress at the start 
             PlayerMonster playerMonster = GameProgress.loadProgress();
             if (playerMonster == null) {
                 // If no previous game progress is found, create a new player and player monster

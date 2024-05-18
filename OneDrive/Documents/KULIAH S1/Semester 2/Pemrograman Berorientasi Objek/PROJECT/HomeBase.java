@@ -34,14 +34,14 @@ public class HomeBase {
                 && monster.getElement().get(0).getEvolutionOptions().contains(newElement)) {
             monster.setElement(List.of(newElement));
             monster.setHasEvolved(true);
-            System.out.println(monster.getNama() + " has evolved into " + newElement.getNama());
+            System.out.println(monster.getNama() + " has evolved into " + newElement.getNama()+".");
         } else if (monster.hasEvolved()) {
             System.out.println(monster.getNama() + " has already evolved this level.");
         } else if (monster.getElement().isEmpty()) {
             System.out.println("The monster has no initial element.");
         } else {
             System.out.println("Evolution to " + newElement.getNama() + " is not allowed from "
-                    + monster.getElement().get(0).getNama());
+                    + monster.getElement().get(0).getNama() +".");
         }
     }
 
@@ -54,9 +54,9 @@ public class HomeBase {
         if (monster.getExpPoint() >= 20) {
             monster.setExpPoint(monster.getExpPoint() - 20);
             monster.addItem(item);
-            System.out.println("Bought " + item.getNama());
+            System.out.println("Bought " + item.getNama()+".");
         } else {
-            System.out.println("Not enough EP to buy " + item.getNama() + ", you must have minimum 20 EP");
+            System.out.println("Not enough EP to buy " + item.getNama() + ", you must have minimum 20 EP.");
         }
     }
 
@@ -95,15 +95,15 @@ public class HomeBase {
                     checkAndLevelUpMonster(playerMonster);
                     break;
                 case 4:
-                    System.out.println("Select an element to evolve to: 1. Fire, 2. Water, 3. Air, 4. Earth, 5. Ice");
+                    System.out.println("Select an element to evolve to: 1. Fire, 2. Wind, 3. Water, 4. Ice, 5. Earth");
                     int elementChoice = scanner.nextInt();
                     scanner.nextLine();
                     Element newElement = switch (elementChoice) {
                         case 1 -> Element.FIRE;
-                        case 2 -> Element.WATER;
-                        case 3 -> Element.AIR;
-                        case 4 -> Element.EARTH;
-                        case 5 -> Element.ICE;
+                        case 3 -> Element.WATER;
+                        case 2 -> Element.WIND;
+                        case 5 -> Element.EARTH;
+                        case 4 -> Element.ICE;
                         default -> null;
                     };
                     if (newElement != null) {
@@ -149,13 +149,13 @@ public class HomeBase {
                     buyItem(playerMonster, new Item("Health Potion", 20, 0));
                     break;
                 case 2:
-                    System.out.println("Choose an element to apply: Fire, Water, Earth, Air, Ice");
+                    System.out.println("Choose an element to apply: Fire, Ice, Wind, Earth, Water");
                     String input = scanner.nextLine().toUpperCase();
                     Element newElement = switch (input) {
                         case "FIRE" -> Element.FIRE;
                         case "WATER" -> Element.WATER;
                         case "EARTH" -> Element.EARTH;
-                        case "AIR" -> Element.AIR;
+                        case "WIND" -> Element.WIND;
                         case "ICE" -> Element.ICE;
                         default -> null;
                     };
