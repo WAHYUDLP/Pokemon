@@ -2,8 +2,8 @@
 Name              	: Pikachu
 Level             	: 1
 Experience Points 	: 35
-Health Points     	: 11
+Health Points     	: 100
 Wins              	: 1
-Element            	: WATER
-Evolved           	: false
+Element            	: WIND
+Evolved           	: true
 ===================================

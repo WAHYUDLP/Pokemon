@@ -22,7 +22,7 @@ public class WildMonster extends Monster {
                 this.specialAttack(target);
                 break;
             case 3:
-                if (this.getElement() != null && target.getElement() != null) {
+                if (this.getElement() != null && !this.getElement().isEmpty() && target.getElement() != null) {
                     this.elementalAttack(target);
                 } else {
                     System.out.println(this.getNama() + " tried to perform an elemental attack but failed.");
@@ -47,15 +47,16 @@ public class WildMonster extends Monster {
     public boolean getIsAggressive() {
         return isAggressive;
     }
+    
     @Override
     public void basicAttack(Monster target) {
         int damage = isAggressive ? random.nextInt(25) + 1 : random.nextInt(10) + 1; // Generates damage 1-25 if aggressive, 1-10 if not
         target.healthPoint -= damage;
     
-        System.out.println("SWINGG\n");
+        System.out.println("YAKKK!...\n");
         System.out.println("Your monster attacked and dealt " + damage + " HP damage!");
-        System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-        System.out.println(nama + " has " + healthPoint + " HP remaining");
+        System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+        System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
     }
     
     @Override
@@ -70,17 +71,17 @@ public class WildMonster extends Monster {
         } else {
             target.healthPoint -= actualDamage;
     
-            System.out.println("BOM....\n");
+            System.out.println("DUARRR!....\n");
             System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
-            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-            System.out.println(nama + " has " + healthPoint + " HP remaining");
+            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+            System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
         }
     }
     
     @Override
     public void elementalAttack(Monster target) {
-        if (element != null && target.element != null) {
-            Element playerElement = element.get(0);  // Pastikan ini diinisialisasi dengan benar
+        if (this.getElement() != null && !this.getElement().isEmpty() && target.getElement() != null) {
+            Element playerElement = this.getElement().get(0);  // Ensure this is correctly initialized
 
             int baseDamage = isAggressive ? 7 : 1;  // Base damage is lower if not aggressive
             int actualDamage = random.nextInt(isAggressive ? 19 : 10) + baseDamage;  // Random damage 7-25 if aggressive, 1-10 if not
@@ -91,10 +92,10 @@ public class WildMonster extends Monster {
             System.out.println(attackMessage);
 
             System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
-            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-            System.out.println(nama + " has " + healthPoint + " HP remaining");
+            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+            System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
         } else {
-            System.out.println("Cannot perform elemental attack. Invalid elements.");
+            System.out.println(this.getNama() + " tried to perform an elemental attack but failed.");
         }
     }
 
@@ -121,7 +122,6 @@ public class WildMonster extends Monster {
 
         if (success) {
             System.out.println("Successfully fled from the battle.");
-   
         } else {
             System.out.println("Failed to flee. The battle continues.");
         }
@@ -131,9 +131,6 @@ public class WildMonster extends Monster {
 
     @Override
     public boolean isFainted() {
-        if (healthPoint <= 0) {
-            return "Menang wild" != null;
-        }
         return healthPoint <= 0;
     }
 
@@ -149,11 +146,6 @@ public class WildMonster extends Monster {
         System.out.println("Wild monsters don't evolve.");
     }
 
-    String getElements() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     @Override
     public void useItem(Item item, Monster target) {
         // TODO Auto-generated method stub
@@ -165,5 +157,4 @@ public class WildMonster extends Monster {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'incrementWins'");
     }
-
 }

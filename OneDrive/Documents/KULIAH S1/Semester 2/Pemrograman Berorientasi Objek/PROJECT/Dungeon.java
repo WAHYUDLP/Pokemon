@@ -15,16 +15,16 @@ public class Dungeon {
     }
 
     private void generateMonster() {
-        monsters.add(new WildMonster("Aqua Spirit", 4, List.of(new Element("AIR")), true));
-        monsters.add(new WildMonster("Drake", 5, List.of(new Element("API")), false));
-        monsters.add(new WildMonster("Terra Beast", 3, List.of(new Element("TANAH")), false));
-        monsters.add(new WildMonster("Flame Phoenix", 6, List.of(new Element("API")), true));
-        monsters.add(new WildMonster("Frost Wyvern", 7, List.of(new Element("ES")), true));
-        monsters.add(new WildMonster("Thunderbird", 5, List.of(new Element("ANGIN")), true));
-        monsters.add(new WildMonster("Rock Golem", 4, List.of(new Element("TANAH")), false));
-        monsters.add(new WildMonster("Ocean Leviathan", 8, List.of(new Element("AIR")), true));
-        monsters.add(new WildMonster("Blizzard Yeti", 7, List.of(new Element("ES")), true));
-        monsters.add(new WildMonster("Storm Elemental", 6, List.of(new Element("ANGIN")), true));
+        monsters.add(new WildMonster("Aqua Spirit", 4, List.of(new Element("WATER")), true));
+        monsters.add(new WildMonster("Drake", 5, List.of(new Element("FIRE")), false));
+        monsters.add(new WildMonster("Terra Beast", 3, List.of(new Element("EARTH")), false));
+        monsters.add(new WildMonster("Flame Phoenix", 6, List.of(new Element("FIRE")), true));
+        monsters.add(new WildMonster("Frost Wyvern", 7, List.of(new Element("ICE")), true));
+        monsters.add(new WildMonster("Thunderbird", 5, List.of(new Element("WIND")), true));
+        monsters.add(new WildMonster("Rock Golem", 4, List.of(new Element("EARTH")), false));
+        monsters.add(new WildMonster("Ocean Leviathan", 8, List.of(new Element("WATER")), true));
+        monsters.add(new WildMonster("Blizzard Yeti", 7, List.of(new Element("ICE")), true));
+        monsters.add(new WildMonster("Storm Elemental", 6, List.of(new Element("WIND")), true));
     }
 
     public void explore(PlayerMonster playerMonster) {

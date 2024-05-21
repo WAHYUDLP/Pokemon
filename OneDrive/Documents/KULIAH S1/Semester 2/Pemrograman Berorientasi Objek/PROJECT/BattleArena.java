@@ -29,9 +29,11 @@ public class BattleArena {
                         break;
                     case 2:
                         myMonster.specialAttack(wildMonster);
+
                         break;
                     case 3:
                         myMonster.elementalAttack(wildMonster);
+
                         break;
                     case 4:
                         if (myMonster instanceof PlayerMonster) {
