@@ -29,25 +29,6 @@ public class HomeBase {
             System.out.println("Your wins: " + monster.getWins() + ", Your EP: " + monster.getExpPoint());
         }
     }
-    // public void evolveMonster(PlayerMonster monster, Element newElement) {
-    // if (!monster.getElement().isEmpty() && !monster.hasEvolved()) {
-    // Element currentElement = monster.getElement().get(0);
-    // List<Element> evolutionOptions = currentElement.getEvolutionOptions();
-    // if (evolutionOptions != null && evolutionOptions.contains(newElement)) {
-    // monster.setElement(List.of(newElement));
-    // monster.setHasEvolved(true);
-    // System.out.println(monster.getNama() + " has evolved into " +
-    // newElement.getNama() + ".");
-    // } else if (monster.hasEvolved()) {
-    // System.out.println(monster.getNama() + " has already evolved this level.");
-    // } else if (monster.getElement().isEmpty()) {
-    // System.out.println("The monster has no initial element.");
-    // } else {
-    // System.out.println("Evolution to " + newElement.getNama() + " is not allowed
-    // from " + currentElement.getNama() + ".");
-    // }
-    // }
-    // }
     
 
     public void evolveMonster(PlayerMonster monster, Element newElement) {
@@ -199,8 +180,3 @@ public class HomeBase {
     }
 }
 
-class LevelOutOfBoundsException extends Exception {
-    public LevelOutOfBoundsException(String message) {
-        super(message);
-    }
-}

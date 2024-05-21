@@ -20,7 +20,7 @@ public class MainPokemon {
                 Player player = new Player(playerName);
                 System.out.println("Player " + playerName + " starts the adventure!");
 
-                playerMonster = new PlayerMonster("Pokemon", 1, List.of(Element.WATER), player);
+                playerMonster = new PlayerMonster("Pikachu", 1, List.of(Element.WATER), player);
             }
 
             // Check if the player's monster has reached level 100
@@ -59,7 +59,7 @@ public class MainPokemon {
                         case 3:
                             System.out.println("Do you want to save or delete progress?");
                             System.out.println("1. Save Progress");
-                            System.out.println("2. Delete Progress");
+                            System.out.println("2. Delete Account");
                             System.out.println("3. Cancel");
 
                             int exitChoice = getNextInt();
