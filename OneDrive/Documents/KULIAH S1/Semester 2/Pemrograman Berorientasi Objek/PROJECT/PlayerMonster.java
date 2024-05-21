@@ -193,25 +193,7 @@ public class PlayerMonster extends Monster {
 
     }
 
-    // private int determineElementalEffectiveness(List<Element> elements) {
-    //     for (Element element : elements) {
-    //         switch (element.getNama().toLowerCase()) {
-    //             case "water":
-    //                 return element.getNama().equalsIgnoreCase("fire") ? 2 : 1;
-    //             case "earth":
-    //                 return element.getNama().equalsIgnoreCase("water") ? 2 : 1;
-    //             case "fire":
-    //                 return element.getNama().equalsIgnoreCase("ice") ? 2 : 1;
-    //             case "ice":
-    //                 return element.getNama().equalsIgnoreCase("air") ? 2 : 1;
-    //             case "air":
-    //                 return element.getNama().equalsIgnoreCase("earth") ? 2 : 1;
-    //             default:
-    //                 return 1; // Default effectiveness if elements don't match
-    //         }
-    //     }
-    //     return 1; // Default effectiveness if no matching element is found
-    // }
+
 
     @Override
     public void useItem(Item item, Monster target) {

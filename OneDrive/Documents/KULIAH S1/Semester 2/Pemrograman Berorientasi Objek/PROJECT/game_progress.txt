@@ -2,7 +2,7 @@
 Name              	: Pokemon
 Level             	: 1
 Experience Points 	: 50
-Health Points     	: 20
+Health Points     	: 5
 Wins              	: 2
 Element            	: FIRE
 Evolved           	: false

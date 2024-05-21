@@ -23,6 +23,14 @@ public class MainPokemon {
                 playerMonster = new PlayerMonster("Pokemon", 1, List.of(Element.WATER), player);
             }
 
+            // Check if the player's monster has reached level 100
+            if (playerMonster.getLevel() >= 100) {
+                System.out.println("You must delete the account");
+                GameProgress.deleteProgress();
+                System.out.println("Progress deleted. Exiting game...");
+                return;
+            }
+
             // Tampilkan informasi tentang monster pemain
             displayMonsterInfo(playerMonster);
 
@@ -125,4 +133,3 @@ class LevelOutOfBoundsException extends Exception {
         super(message);
     }
 }
-
