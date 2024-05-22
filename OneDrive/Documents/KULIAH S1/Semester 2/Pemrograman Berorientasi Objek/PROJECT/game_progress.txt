@@ -2,7 +2,7 @@
 Name              	: Pikachu
 Level             	: 1
 Experience Points 	: 0
-Health Points     	: 90
+Health Points     	: -11
 Wins              	: 0
 Element            	: FIRE
 Evolved           	: true
@@ -10,7 +10,7 @@ Evolved           	: true
 Name              	: Charmander
 Level             	: 1
 Experience Points 	: 0
-Health Points     	: 100
+Health Points     	: -12
 Wins              	: 0
 Element            	: WIND
 Evolved           	: true

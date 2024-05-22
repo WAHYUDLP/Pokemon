@@ -53,10 +53,8 @@ public class WildMonster extends Monster {
         int damage = isAggressive ? random.nextInt(25) + 1 : random.nextInt(10) + 1; // Generates damage 1-25 if aggressive, 1-10 if not
         target.healthPoint -= damage;
     
-        System.out.println("YAKKK!...\n");
-        System.out.println("Your monster attacked and dealt " + damage + " HP damage!");
+        System.out.println("\nYAKKK!... Your monster dealt " + damage + " HP damage!");
         System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-        System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
     }
     
     @Override
@@ -71,10 +69,8 @@ public class WildMonster extends Monster {
         } else {
             target.healthPoint -= actualDamage;
     
-            System.out.println("DUARRR!....\n");
-            System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
+            System.out.println("\nDUARRR!... Your monster dealt " + actualDamage + " HP damage!");
             System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-            System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
         }
     }
     
@@ -82,23 +78,20 @@ public class WildMonster extends Monster {
     public void elementalAttack(Monster target) {
         if (this.getElement() != null && !this.getElement().isEmpty() && target.getElement() != null) {
             Element playerElement = this.getElement().get(0);  // Ensure this is correctly initialized
-
+    
             int baseDamage = isAggressive ? 7 : 1;  // Base damage is lower if not aggressive
             int actualDamage = random.nextInt(isAggressive ? 19 : 10) + baseDamage;  // Random damage 7-25 if aggressive, 1-10 if not
     
             target.healthPoint -= actualDamage;
-    
+    System.out.println();
             String attackMessage = getElementalAttackMessage(playerElement);
-            System.out.println(attackMessage);
-
-            System.out.println("Your monster attacked and dealt " + actualDamage + " HP damage!!");
+            System.out.println(attackMessage + " Your monster dealt " + actualDamage + " HP damage!");
             System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-            System.out.println(this.getNama() + " has " + this.healthPoint + " HP remaining");
         } else {
             System.out.println(this.getNama() + " tried to perform an elemental attack but failed.");
         }
     }
-
+    
     private String getElementalAttackMessage(Element element) {
         switch (element.getNama().toUpperCase()) {
             case "FIRE":

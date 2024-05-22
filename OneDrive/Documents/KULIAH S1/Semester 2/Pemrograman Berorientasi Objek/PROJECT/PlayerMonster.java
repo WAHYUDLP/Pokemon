@@ -95,60 +95,56 @@ public class PlayerMonster extends Monster {
     @Override
     public void basicAttack(Monster target) {
         int damage = level * 12; // Example: basic attack reduces HP by 12 per level
-
+    
         target.healthPoint -= damage;
-
-        System.out.println("CIAAAA!....\n");
-        System.out.println(nama + " performed a basic attack on " + target.nama);
-        System.out.println("The attack reduced " + target.nama + "'s HP by " + damage);
-        System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-        System.out.println(nama + " has " + healthPoint + " HP remaining");
+    
+        System.out.println("\n"+nama + " performed a basic attack on " + target.nama + "!");
+        System.out.println(target.nama + "'s HP decreased by " + damage + ". " + target.nama + " has " + target.healthPoint + " HP.");
+        System.out.println(nama + " has " + healthPoint + " HP.");
     }
-
+    
     @Override
     public void specialAttack(Monster target) {
         int actualDamage = level * 15; // Example: special attack deals 15 HP per level
-
+    
         boolean miss = Math.random() < 0.1; // 10% chance of missing
-
+    
         if (miss) {
-            System.out.println("Special attack missed!");
+            System.out.println(nama + "'s special attack missed!");
         } else {
             target.healthPoint -= actualDamage;
             int sacrificeHP = (int) (healthPoint * 0.2);
             healthPoint -= sacrificeHP;
-
-            System.out.println("BOOOMMMM!......\n");
-            System.out.println(nama + " performed a special attack on " + target.nama);
-            System.out.println("The attack reduced " + target.nama + "'s HP by " + actualDamage);
-            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-            System.out
-                    .println(nama + " sacrificed " + sacrificeHP + " HP and now has " + healthPoint + " HP remaining");
+    
+            System.out.println("\n"+nama + " performed a special attack on " + target.nama + "!");
+            System.out.println(target.nama + "'s HP decreased by " + actualDamage + ". " + target.nama + " has " + target.healthPoint + " HP.");
+            System.out.println(nama + " sacrificed " + sacrificeHP + " HP and now has " + healthPoint + " HP.");
         }
     }
-
+    
     @Override
     public void elementalAttack(Monster target) {
         if (elements != null && !elements.isEmpty() && target.getElement() != null && !target.getElement().isEmpty()) {
-            Element playerElement = elements.get(0); // Gunakan elemen saat ini dari PlayerMonster
+            Element playerElement = elements.get(0); // Use current element of PlayerMonster
     
             int effectiveness = determineElementalEffectiveness(playerElement, target.getElement().get(0));
-            int baseDamage = level * 20; // Contoh: serangan elemental mengurangi 20 HP per level
+            int baseDamage = level * 20; // Example: elemental attack reduces 20 HP per level
             int actualDamage = baseDamage * effectiveness;
     
             target.healthPoint -= actualDamage;
             String attackMessage = getElementalAttackMessage(playerElement);
+            System.out.println();
+
             System.out.println(attackMessage);
     
-            System.out.println(nama + " performed an elemental attack on " + target.nama);
-            System.out.println("The attack reduced " + target.nama + "'s HP by " + actualDamage);
-            System.out.println(target.nama + " now has " + target.healthPoint + " HP");
-            System.out.println(nama + " has " + healthPoint + " HP remaining");
-    
+            System.out.println(nama + " performed an elemental attack on " + target.nama + "!");
+            System.out.println(target.nama + "'s HP decreased by " + actualDamage + ". " + target.nama + " has " + target.healthPoint + " HP.");
+            System.out.println(nama + " has " + healthPoint + " HP .");
         } else {
             System.out.println("Cannot perform elemental attack. Invalid elements.");
         }
     }
+    
     
     private int determineElementalEffectiveness(Element playerElement, Element targetElement) {
         switch (playerElement.getNama().toUpperCase()) {

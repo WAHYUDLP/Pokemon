@@ -14,6 +14,12 @@ public class BattleArena {
         // Choose a monster to attack for the entire battle
         PlayerMonster currentMonster = chooseMonsterForBattle(playerMonsters, scanner);
 
+        // Check if the chosen monster has negative HP
+        if (currentMonster.getHealthPoint() <= 0) {
+            System.out.println(currentMonster.getNama() + " has fainted!");
+            return; // Exit the battle since the chosen monster has fainted
+        }
+
         while (!battleEnded) {
             System.out.println("\n" + currentMonster.getNama() + "'s turn! Choose your action:");
             System.out.println("1. Basic Attack");
