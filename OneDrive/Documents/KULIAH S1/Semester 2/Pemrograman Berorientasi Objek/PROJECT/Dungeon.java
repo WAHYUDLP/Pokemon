@@ -27,7 +27,7 @@ public class Dungeon {
         monsters.add(new WildMonster("Storm Elemental", 6, List.of(new Element("WIND")), true));
     }
 
-    public void explore(PlayerMonster playerMonster) {
+    public void explore(List<PlayerMonster> playerMonsters) {
         if (monsters.isEmpty()) {
             System.out.println("No monsters left to encounter in the dungeon.");
             return;
@@ -37,20 +37,9 @@ public class Dungeon {
         if (encounterChance < 50) { // 50% chance to encounter a monster
             Monster wildMonster = getMonsterRandom();
             System.out.println("A wild " + wildMonster.getNama() + " appears!");
-            battleArena.startBattle(playerMonster, wildMonster);
+            battleArena.startBattle(playerMonsters, wildMonster);
         } else {
             System.out.println("No monsters encountered this time.");
-        }
-    }
-
-    void startBattle(Player player) {
-        Monster wildMonster = getMonsterRandom();
-        if (wildMonster != null) {
-            System.out.println("A wild " + wildMonster.getNama() + " appears!");
-            player.battleMonster(wildMonster);
-
-        } else {
-            System.out.println("No more monsters in the dungeon.");
         }
     }
 
@@ -60,5 +49,10 @@ public class Dungeon {
             return monsters.remove(index);
         }
         return null;
+    }
+
+    public void startBattle(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'startBattle'");
     }
 }

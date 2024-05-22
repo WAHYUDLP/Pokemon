@@ -98,7 +98,7 @@ public class PlayerMonster extends Monster {
 
         target.healthPoint -= damage;
 
-        System.out.println("CIAAAA!....");
+        System.out.println("CIAAAA!....\n");
         System.out.println(nama + " performed a basic attack on " + target.nama);
         System.out.println("The attack reduced " + target.nama + "'s HP by " + damage);
         System.out.println(target.nama + " now has " + target.healthPoint + " HP");
@@ -118,7 +118,7 @@ public class PlayerMonster extends Monster {
             int sacrificeHP = (int) (healthPoint * 0.2);
             healthPoint -= sacrificeHP;
 
-            System.out.println("BOOOMMMM!......");
+            System.out.println("BOOOMMMM!......\n");
             System.out.println(nama + " performed a special attack on " + target.nama);
             System.out.println("The attack reduced " + target.nama + "'s HP by " + actualDamage);
             System.out.println(target.nama + " now has " + target.healthPoint + " HP");

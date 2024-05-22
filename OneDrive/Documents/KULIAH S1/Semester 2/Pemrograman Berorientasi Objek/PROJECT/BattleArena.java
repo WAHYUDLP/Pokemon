@@ -1,79 +1,99 @@
-import java.util.List;
 import java.util.Scanner;
+import java.util.List;
 
 public class BattleArena {
     private boolean healthItemUsed = false;
 
-    public void startBattle(Monster myMonster, Monster wildMonster) {
+    public void startBattle(List<PlayerMonster> playerMonsters, Monster wildMonster) {
         System.out.println("Welcome to the Battle Arena!");
-        System.out.println("Battle started between " + myMonster.getNama() + " and " + wildMonster.getNama()+".");
+        System.out.println("Battle started between your monsters and " + wildMonster.getNama() + ".");
 
         Scanner scanner = new Scanner(System.in);
         boolean battleEnded = false;
-        boolean playerTurn = true; // Toggle to determine whose turn it is
+
+        // Choose a monster to attack for the entire battle
+        PlayerMonster currentMonster = chooseMonsterForBattle(playerMonsters, scanner);
 
         while (!battleEnded) {
-            if (playerTurn) {
-                System.out.println("\n" + myMonster.getNama() + "'s turn! Choose your action:");
-                System.out.println("1. Basic Attack");
-                System.out.println("2. Special Attack");
-                System.out.println("3. Elemental Attack");
-                System.out.println("4. Use Item");
-                System.out.println("5. Flee");
+            System.out.println("\n" + currentMonster.getNama() + "'s turn! Choose your action:");
+            System.out.println("1. Basic Attack");
+            System.out.println("2. Special Attack");
+            System.out.println("3. Elemental Attack");
+            System.out.println("4. Use Item");
+            System.out.println("5. Flee");
 
-                int choice = scanner.nextInt();
+            int action = scanner.nextInt();
 
-                switch (choice) {
-                    case 1:
-                        myMonster.basicAttack(wildMonster);
-                        break;
-                    case 2:
-                        myMonster.specialAttack(wildMonster);
-
-                        break;
-                    case 3:
-                        myMonster.elementalAttack(wildMonster);
-
-                        break;
-                    case 4:
-                        if (myMonster instanceof PlayerMonster) {
-                            useItem(scanner, (PlayerMonster) myMonster);
-                        } else {
-                            System.out.println("Only player-controlled monsters can use items.");
-                        }
-                        break;
-                    case 5:
-                        if (myMonster.flee()) {
-                            battleEnded = true;
-                        } else {
-                            System.out.println("Failed to flee!");
-                        }
-                        continue;
-                    default:
-                        System.out.println("Invalid choice! Please choose again.");
-                        continue;
-                }
-            } else {
-                System.out.println("\n" + wildMonster.getNama() + "'s turn!");
-                wildMonster.performRandomAttack(myMonster);
+            switch (action) {
+                case 1:
+                    currentMonster.basicAttack(wildMonster);
+                    break;
+                case 2:
+                    currentMonster.specialAttack(wildMonster);
+                    break;
+                case 3:
+                    currentMonster.elementalAttack(wildMonster);
+                    break;
+                case 4:
+                    useItem(scanner, currentMonster);
+                    break;
+                case 5:
+                    if (currentMonster.flee()) {
+                        battleEnded = true;
+                    } else {
+                        System.out.println("Failed to flee!");
+                    }
+                    continue;
+                default:
+                    System.out.println("Invalid choice! Please choose again.");
+                    continue;
             }
 
-            playerTurn = !playerTurn; // Switch turns
-
-            // Check if battle ended
-            if (myMonster.isFainted() || wildMonster.isFainted()) {
-                if (myMonster.isFainted()) {
-                    System.out.println("Your monster has fainted!");
-                } else {
-                    System.out.println("You defeated the wild monster! Gaining experience...");
-                    myMonster.gainExperiencePoints(35);
-                    myMonster.incrementWins(); // Increment wins after winning a battle
+            // Check if wild monster fainted
+            if (wildMonster.isFainted()) {
+                System.out.println("You defeated the wild monster! Gaining experience...");
+                for (PlayerMonster monster : playerMonsters) {
+                    monster.gainExperiencePoints(35);
+                    monster.incrementWins(); // Increment wins after winning a battle
                 }
+                battleEnded = true;
+            } else {
+                // Wild monster attacks back
+                wildMonster.performRandomAttack(currentMonster);
+                if (currentMonster.isFainted()) {
+                    System.out.println(currentMonster.getNama() + " has fainted!");
+                    // End battle if current monster faints
+                    battleEnded = true;
+                }
+            }
+
+            // Check if all player monsters have fainted
+            if (playerMonsters.stream().allMatch(PlayerMonster::isFainted)) {
+                System.out.println("All your monsters have fainted. You lost the battle.");
                 battleEnded = true;
             }
         }
 
         healthItemUsed = false; // Reset the flag for the next battle
+    }
+
+    private PlayerMonster chooseMonsterForBattle(List<PlayerMonster> playerMonsters, Scanner scanner) {
+        PlayerMonster chosenMonster = null;
+        while (chosenMonster == null) {
+            System.out.println("\nChoose a monster to attack with for this battle:");
+            for (int i = 0; i < playerMonsters.size(); i++) {
+                System.out.println((i + 1) + ". " + playerMonsters.get(i).getNama());
+            }
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (choice > 0 && choice <= playerMonsters.size()) {
+                chosenMonster = playerMonsters.get(choice - 1);
+            } else {
+                System.out.println("Invalid choice! Please choose a valid monster.");
+            }
+        }
+        return chosenMonster;
     }
 
     private void useItem(Scanner scanner, PlayerMonster playerMonster) {
@@ -86,8 +106,7 @@ public class BattleArena {
             case 1: // Health Potion
                 Item healthPotion = new Item("Health Potion", 20, 0);
                 if (playerMonster.hasItem(healthPotion)) {
-                    playerMonster.setHealthPoint(playerMonster.getHealthPoint() + 20); // Assuming +20 HP for health
-                                                                                       // potion
+                    playerMonster.setHealthPoint(playerMonster.getHealthPoint() + 20); // Assuming +20 HP for health potion
                     playerMonster.useItem(healthPotion);
                     System.out.println(playerMonster.getNama() + " used Health Potion. Gained 20 HP.");
                 } else {
@@ -123,10 +142,9 @@ public class BattleArena {
         };
         if (newElement != null) {
             playerMonster.setElement(List.of(newElement));
-            System.out.println(playerMonster.getNama() + " changed element to " + newElement.getNama() +".");
+            System.out.println(playerMonster.getNama() + " changed element to " + newElement.getNama() + ".");
         } else {
             System.out.println("Invalid element choice. Potion has no effect.");
         }
     }
-
 }

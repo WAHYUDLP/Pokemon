@@ -1,9 +1,25 @@
 ========== GAME PROGRESS ==========
 Name              	: Pikachu
 Level             	: 1
-Experience Points 	: 35
+Experience Points 	: 0
+Health Points     	: 90
+Wins              	: 0
+Element            	: FIRE
+Evolved           	: true
+===================================
+Name              	: Charmander
+Level             	: 1
+Experience Points 	: 0
 Health Points     	: 100
-Wins              	: 1
+Wins              	: 0
+Element            	: WIND
+Evolved           	: true
+===================================
+Name              	: Squirtle
+Level             	: 1
+Experience Points 	: 0
+Health Points     	: 100
+Wins              	: 0
 Element            	: WIND
 Evolved           	: true
 ===================================

@@ -40,7 +40,7 @@ public class Player {
     }
     public void battleMonster(Monster monster) {
         if (!monsters.isEmpty()) {
-            Monster myMonster = monsters.get(0); // Contoh sederhana, memilih monster pertama
+            List<PlayerMonster> myMonster = (List<PlayerMonster>) monsters.get(0); // Contoh sederhana, memilih monster pertama
             battleArena.startBattle(myMonster, monster);
         } else {
             System.out.println("No monster is available for battle.");

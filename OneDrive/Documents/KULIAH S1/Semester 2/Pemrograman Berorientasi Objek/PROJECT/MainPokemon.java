@@ -1,38 +1,33 @@
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainPokemon {
     private static Scanner scanner = new Scanner(System.in);
+    private static List<PlayerMonster> chosenMonsters = new ArrayList<>();
 
     public static void main(String[] args) throws LevelOutOfBoundsException {
         try {
             System.out.println("Welcome to Pokemon World!");
 
             // Load game progress at the start 
-            PlayerMonster playerMonster = GameProgress.loadProgress();
-            if (playerMonster == null) {
-                // If no previous game progress is found, create a new player and player monster
+            List<PlayerMonster> playerMonsters = GameProgress.loadProgress();
+            if (playerMonsters == null || playerMonsters.size() < 3) {
+                // If no previous game progress is found or fewer than 3 monsters, create new player and player monsters
                 System.out.print("Enter your player name: ");
                 String playerName = scanner.nextLine();
 
                 Player player = new Player(playerName);
                 System.out.println("Player " + playerName + " starts the adventure!");
 
-                playerMonster = new PlayerMonster("Pikachu", 1, List.of(Element.WATER), player);
+                playerMonsters = List.of(
+                        new PlayerMonster("Pikachu", 1, List.of(Element.WIND), player),
+                        new PlayerMonster("Charmander", 1, List.of(Element.FIRE), player),
+                        new PlayerMonster("Squirtle", 1, List.of(Element.WATER), player)
+                );
             }
-
-            // Check if the player's monster has reached level 100
-            if (playerMonster.getLevel() >= 100) {
-                System.out.println("You must delete the account");
-                GameProgress.deleteProgress();
-                System.out.println("Progress deleted. Exiting game...");
-                return;
-            }
-
-            // Tampilkan informasi tentang monster pemain
-            displayMonsterInfo(playerMonster);
 
             HomeBase homeBase = new HomeBase();
             BattleArena battleArena = new BattleArena(); // Create BattleArena object
@@ -50,11 +45,15 @@ public class MainPokemon {
                     scanner.nextLine(); // Consume the newline character after nextInt
                     switch (choice) {
                         case 1:
-                            homeBase.enterHomeBase(playerMonster);
+                            homeBase.enterHomeBase(playerMonsters, chosenMonsters);
                             break;
                         case 2:
-                            System.out.println("Welcome to Dungeon");
-                            dungeon.explore(playerMonster);
+                            if (chosenMonsters.isEmpty()) {
+                                System.out.println("You must select at least one monster from Home Base to enter the dungeon.");
+                            } else {
+                                System.out.println("Welcome to Dungeon");
+                                dungeon.explore(chosenMonsters);
+                            }
                             break;
                         case 3:
                             System.out.println("Do you want to save or delete progress?");
@@ -66,7 +65,7 @@ public class MainPokemon {
                             scanner.nextLine(); // Consume the newline character after nextInt
 
                             if (exitChoice == 1) {
-                                GameProgress.saveProgress(playerMonster);
+                                GameProgress.saveProgress(playerMonsters);
                                 System.out.println("Exiting game...");
                                 gameRunning = false;
                             } else if (exitChoice == 2) {
@@ -105,22 +104,9 @@ public class MainPokemon {
         }
     }
 
-    // Metode untuk menampilkan informasi tentang monster pemain
-    public static void displayMonsterInfo(PlayerMonster monster) {
-        System.out.println("\nMonster Information:");
-        System.out.println("Name                \t: " + monster.getNama());
-        System.out.println("Level               \t: " + monster.getLevel());
-        System.out.println("Experience Points   \t: " + monster.getExpPoint());
-        System.out.println("Health Points       \t: " + monster.getHealthPoint());
-        System.out.println("Wins                \t: " + monster.getWins());
-        if (monster.getElement().isEmpty()) {
-            System.out.println("Element       \t: None");
-        } else {
-            System.out.println("Element          \t: " + monster.getElement().get(0).getNama());
-        }
-        System.out.println("Evolved              \t: " + (monster.hasEvolved() ? "Yes" : "No"));
-    }
+   
 }
+
 
 class GameActionException extends Exception {
     public GameActionException(String message) {
