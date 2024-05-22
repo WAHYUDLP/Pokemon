@@ -82,7 +82,7 @@ public class BattleArena {
         while (chosenMonster == null) {
             System.out.println("\nChoose a monster to attack with for this battle:");
             for (int i = 0; i < playerMonsters.size(); i++) {
-                System.out.println((i + 1) + ". " + playerMonsters.get(i).getNama());
+                System.out.println((i + 1) + ". " + playerMonsters.get(i).getNama() + " (" + playerMonsters.get(i).getHealthPoint() + " HP)");
             }
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
