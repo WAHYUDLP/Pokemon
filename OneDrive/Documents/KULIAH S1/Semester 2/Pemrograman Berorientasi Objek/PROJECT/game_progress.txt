@@ -10,7 +10,7 @@ Evolved           	: true
 Name              	: Charmander
 Level             	: 1
 Experience Points 	: 0
-Health Points     	: -12
+Health Points     	: 100
 Wins              	: 0
 Element            	: WIND
 Evolved           	: true

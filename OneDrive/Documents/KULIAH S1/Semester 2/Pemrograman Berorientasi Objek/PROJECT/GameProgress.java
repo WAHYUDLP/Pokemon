@@ -4,6 +4,10 @@ import java.util.*;
 public class GameProgress {
     private static final String SAVE_FILE_PATH = "game_progress.txt";
 
+    public GameProgress(){
+
+    }
+    
     public static void saveProgress(List<PlayerMonster> playerMonsters) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVE_FILE_PATH))) {
             writer.write("========== GAME PROGRESS ==========\n");

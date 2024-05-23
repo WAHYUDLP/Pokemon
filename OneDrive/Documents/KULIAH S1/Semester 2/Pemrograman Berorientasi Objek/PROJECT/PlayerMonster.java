@@ -17,16 +17,7 @@ public class PlayerMonster extends Monster {
         this.boughtItems = new ArrayList<>(); 
     }
 
-    @Override
-    public void basicAttack(Monster target) {
-        int damage = level * 12; // Example: basic attack reduces HP by 12 per level
-    
-        target.healthPoint -= damage;
-    
-        System.out.println("\n"+nama + " performed a basic attack on " + target.nama + "!");
-        System.out.println(target.nama + "'s HP decreased by " + damage + ". " + target.nama + " has " + target.healthPoint + " HP.");
-        System.out.println(nama + " has " + healthPoint + " HP.");
-    }
+  
     
     public PlayerMonster(String nama, int level, List<Element> elements, Player owner) {
         super(nama, level, elements);
@@ -103,12 +94,22 @@ public class PlayerMonster extends Monster {
         this.hasEvolved = hasEvolved;
     }
 
+    @Override
+    public void basicAttack(Monster target) {
+        int damage = level * 12; 
+    
+        target.healthPoint -= damage;
+    
+        System.out.println("\n"+nama + " performed a basic attack on " + target.nama + "!");
+        System.out.println(target.nama + "'s HP decreased by " + damage + ". " + target.nama + " has " + target.healthPoint + " HP.");
+        System.out.println(nama + " has " + healthPoint + " HP.");
+    }
     
     @Override
     public void specialAttack(Monster target) {
-        int actualDamage = level * 15; // Example: special attack deals 15 HP per level
+        int actualDamage = level * 15; 
     
-        boolean miss = Math.random() < 0.1; // 10% chance of missing
+        boolean miss = Math.random() < 0.1; 
     
         if (miss) {
             System.out.println(nama + "'s special attack missed!");

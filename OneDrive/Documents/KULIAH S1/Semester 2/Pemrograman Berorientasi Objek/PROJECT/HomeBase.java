@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class HomeBase {
 
     public HomeBase() {
+        
     }
 
     public void checkAndLevelUpMonster(PlayerMonster monster) {

@@ -15,13 +15,11 @@ public class BattleArena {
         Scanner scanner = new Scanner(System.in);
         boolean battleEnded = false;
 
-        // Choose a monster to attack for the entire battle
         PlayerMonster currentMonster = chooseMonsterForBattle(playerMonsters, scanner);
 
-        // Check if the chosen monster has negative HP
         if (currentMonster.getHealthPoint() <= 0) {
             System.out.println(currentMonster.getNama() + " has fainted!");
-            return; // Exit the battle since the chosen monster has fainted
+            return; 
         }
 
         while (!battleEnded) {

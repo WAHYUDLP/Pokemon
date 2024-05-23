@@ -37,7 +37,7 @@ public class Dungeon {
         if (encounterChance < 50) { // 50% chance to encounter a monster
             Monster wildMonster = getMonsterRandom();
             System.out.println("A wild " + wildMonster.getNama() + " appears!");
-            battleArena.startBattle(playerMonsters, wildMonster);
+          //  battleArena.startBattle(playerMonsters, wildMonster);
         } else {
             System.out.println("No monsters encountered this time.");
         }
@@ -51,8 +51,5 @@ public class Dungeon {
         return null;
     }
 
-    public void startBattle(Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startBattle'");
-    }
+   
 }

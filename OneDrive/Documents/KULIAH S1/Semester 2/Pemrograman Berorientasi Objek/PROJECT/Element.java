@@ -18,6 +18,10 @@ public class Element {
 
     private static final Map<String, Element> ELEMENTS = new HashMap<>();
 
+    public Element(){
+
+    }
+    
     static {
         // Mengatur kelemahan setiap elemen
         FIRE.weakness = Arrays.asList(WATER);

@@ -28,7 +28,7 @@ public abstract class Monster implements BattleActions {
       protected abstract void performRandomAttack(Monster myMonster);
   
       protected abstract void incrementWins();
-      
+
     public int getExpPoint() {
         return expPoint;
     }
@@ -41,13 +41,13 @@ public abstract class Monster implements BattleActions {
         this.expPoint = expPoint;
     }
 
-    // Constructor
+
     public Monster(String nama, int level, List<Element> elements) {
         this.nama = nama;
         this.level = level;
         this.element = elements;
-        this.healthPoint = 100; // Default health points
-        this.expPoint = 0; // Default experience points
+        this.healthPoint = 100; 
+        this.expPoint = 0; 
     }
 
     // Getter for name

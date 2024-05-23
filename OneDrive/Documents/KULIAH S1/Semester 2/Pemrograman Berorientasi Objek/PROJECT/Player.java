@@ -28,13 +28,8 @@ public class Player {
             System.out.println("No monsters to enter the dungeon.");
             return;
         }
-        currentDungeon.startBattle(this);
     }
-    // public void enterDungeon(Dungeon dungeon) {
-    //     this.currentDungeon = dungeon;
-    //     System.out.println(nama + " has entered a dungeon.");
-    //     currentDungeon.startBattle(this); // Memulai pertarungan setelah masuk dungeon
-    // }
+
  public HomeBase getHomeBase() {
         return homeBase;
     }
