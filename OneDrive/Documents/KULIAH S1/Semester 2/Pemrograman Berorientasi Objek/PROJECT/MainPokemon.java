@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+ 
 public class MainPokemon {
     private static Scanner scanner = new Scanner(System.in);
     private static List<PlayerMonster> chosenMonsters = new ArrayList<>();
