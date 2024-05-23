@@ -12,10 +12,9 @@ public class MainPokemon {
         try {
             System.out.println("Welcome to Pokemon World!");
 
-            // Load game progress at the start 
             List<PlayerMonster> playerMonsters = GameProgress.loadProgress();
             if (playerMonsters == null || playerMonsters.size() < 3) {
-                // If no previous game progress is found or fewer than 3 monsters, create new player and player monsters
+               
                 System.out.print("Enter your player name: ");
                 String playerName = scanner.nextLine();
 
@@ -30,8 +29,8 @@ public class MainPokemon {
             }
 
             HomeBase homeBase = new HomeBase();
-            BattleArena battleArena = new BattleArena(); // Create BattleArena object
-            Dungeon dungeon = new Dungeon(battleArena); // Pass BattleArena object to Dungeon
+            BattleArena battleArena = new BattleArena(); 
+            Dungeon dungeon = new Dungeon(battleArena);
 
             boolean gameRunning = true;
             while (gameRunning) {
@@ -42,7 +41,7 @@ public class MainPokemon {
 
                 try {
                     int choice = getNextInt();
-                    scanner.nextLine(); // Consume the newline character after nextInt
+                    scanner.nextLine(); 
                     switch (choice) {
                         case 1:
                             homeBase.enterHomeBase(playerMonsters, chosenMonsters);
@@ -62,7 +61,7 @@ public class MainPokemon {
                             System.out.println("3. Cancel");
 
                             int exitChoice = getNextInt();
-                            scanner.nextLine(); // Consume the newline character after nextInt
+                            scanner.nextLine(); 
 
                             if (exitChoice == 1) {
                                 GameProgress.saveProgress(playerMonsters);
@@ -97,7 +96,7 @@ public class MainPokemon {
         try {
             return scanner.nextInt();
         } catch (InputMismatchException e) {
-            scanner.nextLine(); // consume the incorrect input
+            scanner.nextLine(); 
             throw new GameActionException("Invalid input. Please enter a valid number.");
         } catch (NoSuchElementException e) {
             throw new GameActionException("Input stream closed unexpectedly.");
