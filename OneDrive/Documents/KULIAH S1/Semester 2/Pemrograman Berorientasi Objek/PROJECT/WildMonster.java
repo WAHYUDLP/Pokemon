@@ -10,7 +10,69 @@ public class WildMonster extends Monster {
         this.isAggressive = isAggressive;
     }
 
-    // Randomly perform an attack
+    @Override
+    public void basicAttack(Monster target) {
+        int damage = isAggressive ? random.nextInt(25) + 1 : random.nextInt(10) + 1; 
+        target.healthPoint -= damage;
+
+        System.out.println("\nYAKKK!... Your monster dealt " + damage + " HP damage!");
+        System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+    }
+
+    @Override
+    public void specialAttack(Monster target) {
+        int baseDamage = isAggressive ? 5 : 1; // Base damage is lower if not aggressive
+        int actualDamage = random.nextInt(isAggressive ? 21 : 10) + baseDamage; // Random damage 5-25 if aggressive,
+                                                                                // 1-10 if not
+
+        boolean miss = Math.random() < 0.1; // 10% chance of missing
+
+        if (miss) {
+            System.out.println("Special attack missed!");
+        } else {
+            target.healthPoint -= actualDamage;
+
+            System.out.println("\nDUARRR!... Your monster dealt " + actualDamage + " HP damage!");
+            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+        }
+    }
+
+    @Override
+    public void elementalAttack(Monster target) {
+        if (this.getElement() != null && !this.getElement().isEmpty() && target.getElement() != null) {
+            Element playerElement = this.getElement().get(0); // Ensure this is correctly initialized
+
+            int baseDamage = isAggressive ? 7 : 1; // Base damage is lower if not aggressive
+            int actualDamage = random.nextInt(isAggressive ? 19 : 10) + baseDamage; // Random damage 7-25 if aggressive,
+                                                                                    // 1-10 if not
+
+            target.healthPoint -= actualDamage;
+            System.out.println();
+            String attackMessage = getElementalAttackMessage(playerElement);
+            System.out.println(attackMessage + " Your monster dealt " + actualDamage + " HP damage!");
+            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
+        } else {
+            System.out.println(this.getNama() + " tried to perform an elemental attack but failed.");
+        }
+    }
+
+    private String getElementalAttackMessage(Element element) {
+        switch (element.getNama().toUpperCase()) {
+            case "FIRE":
+                return "Blazing flames!";
+            case "WIND":
+                return "The wind roars!";
+            case "WATER":
+                return "Aqua splash!";
+            case "ICE":
+                return "Freezing cold!";
+            case "EARTH":
+                return "Earthquake shakes!";
+            default:
+                return "Elemental attack!";
+        }
+    }
+
     public void performRandomAttack(Monster target) {
         int attackType = random.nextInt(3) + 1; // Generates 1, 2, or 3
 
@@ -47,68 +109,7 @@ public class WildMonster extends Monster {
     public boolean getIsAggressive() {
         return isAggressive;
     }
-    
-    @Override
-    public void basicAttack(Monster target) {
-        int damage = isAggressive ? random.nextInt(25) + 1 : random.nextInt(10) + 1; // Generates damage 1-25 if aggressive, 1-10 if not
-        target.healthPoint -= damage;
-    
-        System.out.println("\nYAKKK!... Your monster dealt " + damage + " HP damage!");
-        System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-    }
-    
-    @Override
-    public void specialAttack(Monster target) {
-        int baseDamage = isAggressive ? 5 : 1;  // Base damage is lower if not aggressive
-        int actualDamage = random.nextInt(isAggressive ? 21 : 10) + baseDamage;  // Random damage 5-25 if aggressive, 1-10 if not
-    
-        boolean miss = Math.random() < 0.1;  // 10% chance of missing
-    
-        if (miss) {
-            System.out.println("Special attack missed!");
-        } else {
-            target.healthPoint -= actualDamage;
-    
-            System.out.println("\nDUARRR!... Your monster dealt " + actualDamage + " HP damage!");
-            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-        }
-    }
-    
-    @Override
-    public void elementalAttack(Monster target) {
-        if (this.getElement() != null && !this.getElement().isEmpty() && target.getElement() != null) {
-            Element playerElement = this.getElement().get(0);  // Ensure this is correctly initialized
-    
-            int baseDamage = isAggressive ? 7 : 1;  // Base damage is lower if not aggressive
-            int actualDamage = random.nextInt(isAggressive ? 19 : 10) + baseDamage;  // Random damage 7-25 if aggressive, 1-10 if not
-    
-            target.healthPoint -= actualDamage;
-    System.out.println();
-            String attackMessage = getElementalAttackMessage(playerElement);
-            System.out.println(attackMessage + " Your monster dealt " + actualDamage + " HP damage!");
-            System.out.println(target.getNama() + " now has " + target.healthPoint + " HP");
-        } else {
-            System.out.println(this.getNama() + " tried to perform an elemental attack but failed.");
-        }
-    }
-    
-    private String getElementalAttackMessage(Element element) {
-        switch (element.getNama().toUpperCase()) {
-            case "FIRE":
-                return "Blazing flames!";
-            case "WIND":
-                return "The wind roars!";
-            case "WATER":
-                return "Aqua splash!";
-            case "ICE":
-                return "Freezing cold!";
-            case "EARTH":
-                return "Earthquake shakes!";
-            default:
-                return "Elemental attack!";
-        }
-    }
-    
+
     @Override
     public boolean flee() {
         boolean success = Math.random() < 0.3; // 30% chance of success

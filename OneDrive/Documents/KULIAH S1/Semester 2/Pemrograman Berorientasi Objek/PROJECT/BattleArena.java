@@ -4,6 +4,10 @@ import java.util.List;
 public class BattleArena {
     private boolean healthItemUsed = false;
 
+    BattleArena() {
+
+    }
+
     public void startBattle(List<PlayerMonster> playerMonsters, Monster wildMonster) {
         System.out.println("Welcome to the Battle Arena!");
         System.out.println("Battle started between your monsters and " + wildMonster.getNama() + ".");
@@ -88,7 +92,8 @@ public class BattleArena {
         while (chosenMonster == null) {
             System.out.println("\nChoose a monster to attack with for this battle:");
             for (int i = 0; i < playerMonsters.size(); i++) {
-                System.out.println((i + 1) + ". " + playerMonsters.get(i).getNama() + " (" + playerMonsters.get(i).getHealthPoint() + " HP)");
+                System.out.println((i + 1) + ". " + playerMonsters.get(i).getNama() + " ("
+                        + playerMonsters.get(i).getHealthPoint() + " HP)");
             }
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -112,7 +117,8 @@ public class BattleArena {
             case 1: // Health Potion
                 Item healthPotion = new Item("Health Potion", 20, 0);
                 if (playerMonster.hasItem(healthPotion)) {
-                    playerMonster.setHealthPoint(playerMonster.getHealthPoint() + 20); // Assuming +20 HP for health potion
+                    playerMonster.setHealthPoint(playerMonster.getHealthPoint() + 20); // Assuming +20 HP for health
+                                                                                       // potion
                     playerMonster.useItem(healthPotion);
                     System.out.println(playerMonster.getNama() + " used Health Potion. Gained 20 HP.");
                 } else {

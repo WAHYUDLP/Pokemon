@@ -1,6 +1,8 @@
 /**
  * BattleActions
  */
+
+ 
 public interface BattleActions {
     void basicAttack(Monster target);
     void specialAttack(Monster target);
@@ -8,3 +10,5 @@ public interface BattleActions {
     void useItem(Item item, Monster target);
     boolean flee();
 }
+
+

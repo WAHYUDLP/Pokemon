@@ -12,11 +12,22 @@ public class PlayerMonster extends Monster {
     private List<Element> elements;
 
     public PlayerMonster() {
-        super("", 1, new ArrayList<>()); // Call the superclass constructor with default values
+        super("", 1, new ArrayList<>()); 
         this.elements = new ArrayList<>();
-        this.boughtItems = new ArrayList<>(); // Inisialisasi daftar boughtItems
+        this.boughtItems = new ArrayList<>(); 
     }
 
+    @Override
+    public void basicAttack(Monster target) {
+        int damage = level * 12; // Example: basic attack reduces HP by 12 per level
+    
+        target.healthPoint -= damage;
+    
+        System.out.println("\n"+nama + " performed a basic attack on " + target.nama + "!");
+        System.out.println(target.nama + "'s HP decreased by " + damage + ". " + target.nama + " has " + target.healthPoint + " HP.");
+        System.out.println(nama + " has " + healthPoint + " HP.");
+    }
+    
     public PlayerMonster(String nama, int level, List<Element> elements, Player owner) {
         super(nama, level, elements);
         this.owner = owner;
@@ -92,16 +103,6 @@ public class PlayerMonster extends Monster {
         this.hasEvolved = hasEvolved;
     }
 
-    @Override
-    public void basicAttack(Monster target) {
-        int damage = level * 12; // Example: basic attack reduces HP by 12 per level
-    
-        target.healthPoint -= damage;
-    
-        System.out.println("\n"+nama + " performed a basic attack on " + target.nama + "!");
-        System.out.println(target.nama + "'s HP decreased by " + damage + ". " + target.nama + " has " + target.healthPoint + " HP.");
-        System.out.println(nama + " has " + healthPoint + " HP.");
-    }
     
     @Override
     public void specialAttack(Monster target) {

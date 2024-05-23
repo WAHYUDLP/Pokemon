@@ -1,23 +1,42 @@
 import java.util.List;
 
 public abstract class Monster implements BattleActions {
-    // Attributes
-   protected String nama;
-   protected int level;
-    public  int healthPoint;
+
+    protected String nama;
+    protected int level;
+    public int healthPoint;
     int expPoint;
     List<Element> element;
-    // Atribut lainnya
 
-    // Metode lainnya
+      // Abstract Methods
+      public abstract void basicAttack(Monster target);
 
+      public abstract void specialAttack(Monster target);
+  
+      public abstract void elementalAttack(Monster target);
+  
+      public abstract void useItem(Item item, Monster target);
+  
+      public abstract boolean flee();
+  
+      public abstract boolean isFainted();
+  
+      public abstract void gainExperiencePoints(int points);
+  
+      public abstract void evolve(Element newElement);
+  
+      protected abstract void performRandomAttack(Monster myMonster);
+  
+      protected abstract void incrementWins();
+      
     public int getExpPoint() {
         return expPoint;
     }
+
     public void setNama(String nama) {
         this.nama = nama;
     }
-    
+
     public void setExpPoint(int expPoint) {
         this.expPoint = expPoint;
     }
@@ -63,23 +82,6 @@ public abstract class Monster implements BattleActions {
         this.healthPoint = healthPoint;
     }
 
-    // Abstract Methods
-    public abstract void basicAttack(Monster target);
-    public abstract void specialAttack(Monster target);
-    public abstract void elementalAttack(Monster target);
-
-    public abstract void useItem(Item item, Monster target);
-
-    public abstract boolean flee();
-
-    public abstract boolean isFainted();
-
-    public abstract void gainExperiencePoints(int points);
-
-    public abstract void evolve(Element newElement);
-
-    protected abstract void performRandomAttack(Monster myMonster);
-
-    protected abstract void incrementWins();
+  
 
 }
