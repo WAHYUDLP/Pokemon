@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HomeBase {
 
     public HomeBase() {
-        
+
     }
 
     public void checkAndLevelUpMonster(PlayerMonster monster) {
@@ -170,14 +170,14 @@ public class HomeBase {
                     }
                     break;
                 case 2:
-                    System.out.println("Choose an element to apply: Fire, Ice, Wind, Earth, Water");
-                    String input = scanner.nextLine().toUpperCase();
-                    Element newElement = switch (input) {
-                        case "FIRE" -> Element.FIRE;
-                        case "WATER" -> Element.WATER;
-                        case "EARTH" -> Element.EARTH;
-                        case "WIND" -> Element.WIND;
-                        case "ICE" -> Element.ICE;
+                    System.out.println("Choose an element to apply: 1. Fire, 2. Ice, 3. Wind, 4. Earth, 5. Water");
+                    int elementChoice = scanner.nextInt();
+                    Element newElement = switch (elementChoice) {
+                        case 1 -> Element.FIRE;
+                        case 2 -> Element.ICE;
+                        case 3 -> Element.WIND;
+                        case 4 -> Element.EARTH;
+                        case 5 -> Element.WATER;
                         default -> null;
                     };
                     if (newElement != null) {
