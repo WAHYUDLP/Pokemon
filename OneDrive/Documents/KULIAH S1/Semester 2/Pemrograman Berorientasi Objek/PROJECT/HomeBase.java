@@ -63,9 +63,9 @@ public class HomeBase {
     public void enterHomeBase(List<PlayerMonster> playerMonsters, List<PlayerMonster> chosenMonsters) {
         System.out.println("Welcome back to Home Base!");
         Scanner scanner = new Scanner(System.in);
-
+    
         boolean done = false;
-
+    
         while (!done) {
             // Display information for all monsters
             for (PlayerMonster monster : playerMonsters) {
@@ -78,10 +78,10 @@ public class HomeBase {
             System.out.println("4. Buy Item");
             System.out.println("5. Choose Monsters for Dungeon");
             System.out.println("6. Exit and Save Home Base");
-
+    
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
-
+    
             switch (choice) {
                 case 1:
                     levelUpMonsterOption(scanner, playerMonsters);
@@ -98,6 +98,7 @@ public class HomeBase {
                 case 5:
                     chosenMonsters.clear();
                     chosenMonsters.addAll(chooseMonstersForDungeon(playerMonsters));
+                    System.out.println("Chosen monsters for dungeon: " + chosenMonsters);
                     break;
                 case 6:
                     GameProgress.saveProgress(playerMonsters);
@@ -107,9 +108,9 @@ public class HomeBase {
                     System.out.println("Invalid choice. Please choose again.");
                     break;
             }
-
         }
     }
+    
 
     private void levelUpMonsterOption(Scanner scanner, List<PlayerMonster> playerMonsters) {
         PlayerMonster selectedMonster = chooseMonster(scanner, playerMonsters, "Select a monster to level up:");
